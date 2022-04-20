@@ -2,6 +2,9 @@ package com.cat_breeds.common
 
 import com.cat_breeds.common.breed_info.breed_info_data.di.breedInfoDataModule
 import com.cat_breeds.common.breed_info.breed_info_domain.di.breedInfoDomainModule
+import com.cat_breeds.common.breed_list.breed_list_data.di.breedListDataModule
+import com.cat_breeds.common.breed_list.breed_list_domain.di.breedListDomainModule
+import com.cat_breeds.common.breed_list.breed_list_ui.di.breedListUiModule
 import org.kodein.di.DI
 
 class CommonApp {
@@ -10,6 +13,9 @@ class CommonApp {
         diBuilder.run {
             importOnce(breedInfoDataModule)
             importOnce(breedInfoDomainModule)
+            importOnce(breedListDataModule)
+            importOnce(breedListDomainModule)
+            importOnce(breedListUiModule)
         }
     }
 }

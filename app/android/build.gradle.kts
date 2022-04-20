@@ -39,10 +39,11 @@ dependencies {
     implementation(Deps.ArkIvanov.Decompose.decompose)
     implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
     implementation(Deps.AndroidX.AppCompat.appCompat)
-    implementation(Deps.AndroidX.Activity.activityCompose)
+    Deps.AndroidX.Compose.default.forEach { implementation(it) }
+
     implementation(Deps.DI.Kodein.di)
 
     implementation(project(":di"))
     implementation(project(":app:common"))
-    implementation(project(":feature:main_screen:android"))
+    implementation(project(":feature:root_screen:android"))
 }

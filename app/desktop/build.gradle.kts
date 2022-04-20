@@ -30,7 +30,7 @@ kotlin {
 
                 implementation(project(":di"))
                 implementation(project(":app:common"))
-                implementation(project(":feature:main_screen:desktop"))
+                implementation(project(":feature:root_screen:desktop"))
             }
         }
     }

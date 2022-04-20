@@ -27,7 +27,14 @@ object Deps {
             val testJunit get() = "org.jetbrains.kotlin:kotlin-test-junit:$VERSION"
             val testJs get() = "org.jetbrains.kotlin:kotlin-test-js:$VERSION"
             val testAnnotationsCommon get() = "org.jetbrains.kotlin:kotlin-test-annotations-common:$VERSION"
+
+            object Coroutines {
+                private const val VERSION = "1.6.1"
+                const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION"
+                const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION"
+            }
         }
+
 
         object Compose {
             private val VERSION get() = properties["compose.version"]
@@ -49,8 +56,18 @@ object Deps {
             const val appCompat = "androidx.appcompat:appcompat:1.3.0"
         }
 
-        object Activity {
-            const val activityCompose = "androidx.activity:activity-compose:1.3.0"
+        object Compose {
+            private const val VERSION = "1.1.1"
+
+            const val ui = "androidx.compose.ui:ui:$VERSION"
+            const val tooling = "androidx.compose.ui:ui:$VERSION"
+            const val foundation = "androidx.compose.foundation:foundation:$VERSION"
+            const val material = "androidx.compose.material:material:$VERSION"
+            const val activity = "androidx.activity:activity-compose:1.4.0"
+            const val iconsCore = "androidx.compose.material:material-icons-core:$VERSION"
+            const val iconsEx = "androidx.compose.material:material-icons-extended:$VERSION"
+
+            val default = listOf(ui, tooling, foundation, material, activity, iconsCore, iconsEx)
         }
     }
 
@@ -59,7 +76,7 @@ object Deps {
             private const val VERSION = "3.0.0-beta01"
 
             const val mvikotlin = "com.arkivanov.mvikotlin:mvikotlin:$VERSION"
-            const val mvikotlinCoroutines = "com.arkivanov.mvikotlin:mvikotlin:mvikotlin-extensions-coroutines:$VERSION"
+            const val mvikotlinCoroutines = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:$VERSION"
             const val mvikotlinMain = "com.arkivanov.mvikotlin:mvikotlin-main:$VERSION"
             const val mvikotlinLogging = "com.arkivanov.mvikotlin:mvikotlin-logging:$VERSION"
             const val mvikotlinTimeTravel = "com.arkivanov.mvikotlin:mvikotlin-timetravel:$VERSION"
