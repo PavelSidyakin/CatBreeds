@@ -15,6 +15,7 @@ kotlin {
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinCoroutines)
                 implementation(Deps.ArkIvanov.Decompose.decompose)
+                implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
                 implementation(Deps.DI.Kodein.di)
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
 

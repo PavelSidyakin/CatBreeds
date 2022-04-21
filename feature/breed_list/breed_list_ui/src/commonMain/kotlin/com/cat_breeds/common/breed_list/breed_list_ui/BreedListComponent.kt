@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.kodein.di.instance
 
 internal class BreedListComponent(
@@ -42,7 +43,9 @@ internal class BreedListComponent(
 
         override val value: BreedListState = store.state
         override fun subscribe(observer: ValueObserver<BreedListState>) {
-            jobs += observer to store.states.launchIn(scope)
+            jobs += observer to store.states
+                .onEach { observer(it) }
+                .launchIn(scope)
         }
 
         override fun unsubscribe(observer: ValueObserver<BreedListState>) {

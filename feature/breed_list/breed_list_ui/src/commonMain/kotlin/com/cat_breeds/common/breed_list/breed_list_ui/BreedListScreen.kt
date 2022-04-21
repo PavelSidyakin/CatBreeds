@@ -4,4 +4,4 @@ import androidx.compose.runtime.Composable
 
 
 @Composable
-expect fun BreedListScreen()
+expect fun BreedListScreen(component: BreedList)

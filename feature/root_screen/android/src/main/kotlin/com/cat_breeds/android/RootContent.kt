@@ -9,7 +9,7 @@ import com.cat_breeds.common.breed_list.breed_list_ui.BreedListScreen
 fun RootContent(component: CatBreedsRoot) {
     Children(routerState = component.routerState) {
         when (val child = it.instance) {
-            is CatBreedsRoot.ChildComponent.BreedListChild -> BreedListScreen()
+            is CatBreedsRoot.ChildComponent.BreedListChild -> BreedListScreen(child.component)
         }
     }
 }
