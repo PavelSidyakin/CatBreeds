@@ -10,6 +10,8 @@ rootProject.name = "CatBreeds"
 
 include(":di")
 
+include(":data:remote")
+
 include(":feature:root_screen:android")
 include(":feature:root_screen:desktop")
 include(":feature:root_screen:common")

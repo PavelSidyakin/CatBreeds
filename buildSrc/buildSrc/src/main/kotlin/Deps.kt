@@ -124,6 +124,8 @@ object Deps {
             private const val VERSION = "2.0.0"
 
             const val core = "io.ktor:ktor-client-core:$VERSION"
+            const val contentNegotiation = "io.ktor:ktor-client-content-negotiation:$VERSION"
+            const val serializationKotlinxJson = "io.ktor:ktor-serialization-kotlinx-json:$VERSION"
             const val android = "io.ktor:ktor-client-okhttp:$VERSION"
             const val desktop = "io.ktor:ktor-client-cio:$VERSION"
         }

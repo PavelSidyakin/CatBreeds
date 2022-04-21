@@ -11,6 +11,7 @@ kotlin {
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
 
                 implementation(project(":di"))
+                implementation(project(":data:remote"))
                 implementation(project(":feature:breed_list:breed_list_domain"))
             }
         }

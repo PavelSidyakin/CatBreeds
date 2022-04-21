@@ -20,6 +20,8 @@ kotlin {
 
                 implementation(project(":feature:root_screen:common"))
 
+                implementation(project(":data:remote"))
+
             }
         }
     }
