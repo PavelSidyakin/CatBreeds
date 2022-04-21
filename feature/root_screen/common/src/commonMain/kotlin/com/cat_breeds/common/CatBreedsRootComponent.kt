@@ -8,30 +8,24 @@ import com.arkivanov.essenty.parcelable.Parcelable
 import com.arkivanov.essenty.parcelable.Parcelize
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedList
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponentParams
-import org.kodein.di.instance
 
 
-class CatBreedsRootComponent internal constructor(
-    componentContext: ComponentContext,
-    private val breedListFactory: (ComponentContext) -> BreedList,
-) : CatBreedsRoot, ComponentContext by componentContext {
+internal class CatBreedsRootComponent(
+    params: CatBreedsRootParams,
+    private val breedListFactory: (BreedListComponentParams) -> BreedList,
+) : CatBreedsRoot, ComponentContext by params.componentContext {
 
-    constructor(
-        componentContext: ComponentContext,
-    ) : this(
-        componentContext = componentContext,
-        breedListFactory = { childContext ->
-            val breedList: BreedList by globalDI.instance(
-                arg = BreedListComponentParams(
-                    childContext
-                )
-            )
-            breedList
-        }
-    )
+//    private val breedListFactory: (ComponentContext) -> BreedList = { childContext ->
+//        val breedList: BreedList by globalDI.instance(
+//            arg = BreedListComponentParams(
+//                childContext,
+//            )
+//        )
+//        breedList
+//    }
 
     private val router = router<Configuration, CatBreedsRoot.ChildComponent>(
-        initialConfiguration = Configuration.BreedList,
+        initialStack = { listOf(Configuration.BreedList)},
         handleBackButton = true,
         childFactory = ::createChild,
     )
@@ -39,18 +33,19 @@ class CatBreedsRootComponent internal constructor(
     private fun createChild(configuration: Configuration, componentContext: ComponentContext): CatBreedsRoot.ChildComponent {
         return when (configuration) {
             is Configuration.BreedInfo -> TODO()
-            Configuration.BreedList -> CatBreedsRoot.ChildComponent.BreedListChild(breedListFactory(componentContext))
+            is Configuration.BreedList -> CatBreedsRoot.ChildComponent.BreedListChild(
+                breedListFactory(BreedListComponentParams(componentContext))
+            )
         }
     }
 
-    override val routerState: Value<RouterState<*, CatBreedsRoot.ChildComponent>>
-        get() = TODO("Not yet implemented")
+    override val routerState: Value<RouterState<*, CatBreedsRoot.ChildComponent>> = router.state
 
-    private sealed interface Configuration: Parcelable {
+    private sealed class Configuration: Parcelable {
         @Parcelize
-        object BreedList: Configuration
+        object BreedList: Configuration()
 
         @Parcelize
-        data class BreedInfo(val id: String): Configuration
+        data class BreedInfo(val id: String): Configuration()
     }
 }

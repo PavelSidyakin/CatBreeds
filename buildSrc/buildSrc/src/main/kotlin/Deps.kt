@@ -32,6 +32,7 @@ object Deps {
                 private const val VERSION = "1.6.1"
                 const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION"
                 const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION"
+                const val jvm = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION"
             }
         }
 

@@ -12,7 +12,7 @@ kotlin {
     }
 
     sourceSets {
-        named("jvmMain") {
+        val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
 //                implementation(project(":common:utils"))
@@ -23,37 +23,17 @@ kotlin {
                 implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
                 implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
-               // implementation(Deps.Badoo.Reaktive.reaktive)
-               // implementation(Deps.Badoo.Reaktive.coroutinesInterop)
+                // implementation(Deps.Badoo.Reaktive.reaktive)
+                // implementation(Deps.Badoo.Reaktive.coroutinesInterop)
                 implementation(Deps.Networking.KtorClient.desktop)
-                implementation(Deps.DI.Kodein.di)
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
                 implementation(Deps.JetBrains.Kotlin.Coroutines.jvm)
-
+                implementation(Deps.DI.Kodein.di)
 
                 implementation(project(":di"))
-                implementation(project(":app:common"))
-                implementation(project(":feature:root_screen:desktop"))
-            }
-        }
-    }
-}
+                implementation(project(":feature:root_screen:common"))
 
-compose.desktop {
-    application {
-        mainClass = "com.cat_breeds.desktop.app.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "CatBreeds"
-            packageVersion = "1.0.0"
-
-            modules("java.sql")
-
-            windows {
-                menuGroup = "Cat Breeds"
-                // see https://wixtoolset.org/documentation/manual/v3/howtos/general/generate_guids.html
-                upgradeUuid = "5452cda3-3f9d-48c0-a2d1-1127d3cd345c"
+                implementation(project(":feature:breed_list:breed_list_ui"))
             }
         }
     }

@@ -13,7 +13,9 @@ val breedListUiModule = DI.Module("breedListUiModule") {
     bind<BreedList> { factory { params: BreedListComponentParams -> BreedListComponent(params) } }
 }
 
-internal val breedListUiDI = DI {
-    extend(globalDI)
-    bind<BreedListIntentExecutor> { provider { BreedListIntentExecutorImpl(instance()) } }
+internal val breedListUiDI by lazy {
+    DI {
+        extend(globalDI)
+        bind<BreedListIntentExecutor> { provider { BreedListIntentExecutorImpl(instance()) } }
+    }
 }

@@ -16,11 +16,15 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.lifecycle.LifecycleC
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.cat_breeds.common.CommonApp
 import com.cat_breeds.common.globalDI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.kodein.di.DI
 
 private val commonApp by lazy { CommonApp() }
 
 fun main() {
+
     globalDI.baseDI = DI {
         commonApp.buildCommonDI(this)
     }
