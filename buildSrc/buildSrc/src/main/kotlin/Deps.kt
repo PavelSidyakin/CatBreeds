@@ -130,4 +130,8 @@ object Deps {
             const val desktop = "io.ktor:ktor-client-cio:$VERSION"
         }
     }
+
+    object Widgets {
+        const val landscapistGlide = "com.github.skydoves:landscapist-glide:1.5.1"
+    }
 }

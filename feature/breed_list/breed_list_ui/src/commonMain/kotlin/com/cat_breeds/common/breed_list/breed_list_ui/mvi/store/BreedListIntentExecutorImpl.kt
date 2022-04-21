@@ -37,6 +37,6 @@ internal class BreedListIntentExecutorImpl(
     }
 
     private fun BreedListItem.toBreedListUiItem(): BreedListUiItem {
-        return BreedListUiItem(name)
+        return BreedListUiItem(name, imageUrl)
     }
 }

@@ -10,6 +10,6 @@ internal class BreedListRemoteRepositoryImpl(
 
     override suspend fun requestBreeds(): List<BreedListItem> {
         return catApi.requestCatBreeds()
-            .map { BreedListItem(it.name) }
+            .map { BreedListItem(it.name, it.image?.url) }
     }
 }

@@ -39,6 +39,7 @@ kotlin {
             dependencies {
                 implementation(Deps.JetBrains.Kotlin.Coroutines.android)
                 Deps.AndroidX.Compose.default.forEach { implementation(it) }
+                implementation(Deps.Widgets.landscapistGlide)
             }
         }
 
