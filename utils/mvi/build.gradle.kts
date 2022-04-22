@@ -1,5 +1,3 @@
-import org.jetbrains.compose.compose
-
 plugins {
     id("multiplatform-setup")
     id("android-setup")

@@ -31,3 +31,5 @@ include(":app:desktop")
 include(":widgets:compose")
 
 include(":utils:mvi")
+
+include(":resources")

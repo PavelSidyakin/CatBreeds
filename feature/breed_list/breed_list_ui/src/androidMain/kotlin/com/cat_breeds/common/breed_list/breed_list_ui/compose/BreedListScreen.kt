@@ -23,13 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponent
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListUiItem
+import com.cat_breeds.resources.SharedRes
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 import kotlin.math.max
 
 @Composable
@@ -70,7 +74,8 @@ actual fun BreedListScreen(
                                         modifier = Modifier
                                             .padding(top = 10.dp)
                                             .width(200.dp),
-                                        text = "No Image",
+                                        text = StringDesc.Resource(SharedRes.strings.no_image)
+                                            .toString(LocalContext.current),
                                         textAlign = TextAlign.Center,
                                     )
                                     else -> GlideImage(

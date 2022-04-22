@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
@@ -26,8 +25,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.cat_breeds.common.breed_info.breed_info_ui.BreedInfoComponent
+import com.cat_breeds.resources.SharedRes
 import com.cat_breeds.widgets.compose.AsyncImage
 import com.cat_breeds.widgets.compose.loadImageBitmap
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 
 @Composable
 actual fun BreedInfoScreen(component: BreedInfoComponent) {
@@ -50,7 +52,9 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                     CircularProgressIndicator(color = Color.Blue)
                 }
                 false -> when (val breedInfo = model.breedInfo) {
-                    null -> Text(text = "No info")
+                    null -> Text(
+                        text = StringDesc.Resource(SharedRes.strings.no_info).localized(),
+                    )
                     else -> {
                         BoxWithConstraints {
                             val maxHeight = maxHeight
@@ -62,7 +66,9 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                                 verticalArrangement = Arrangement.SpaceBetween,
                             ) {
                                 when (val imageUrl = model.breedInfo?.imageUrl) {
-                                    null -> Text(text = "No image")
+                                    null -> Text(
+                                        text = StringDesc.Resource(SharedRes.strings.no_image).localized(),
+                                    )
                                     else -> {
                                         AsyncImage(
                                             modifier = Modifier,

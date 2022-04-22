@@ -23,6 +23,7 @@ kotlin {
                 implementation(project(":feature:breed_info:breed_info_domain"))
                 implementation(project(":widgets:compose"))
                 implementation(project(":utils:mvi"))
+                implementation(project(":resources"))
             }
         }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_name">Cat Breeds</string>
+    <string name="no_image">No image</string>
+    <string name="no_info">No info</string>
+</resources>

@@ -25,8 +25,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponent
+import com.cat_breeds.resources.SharedRes
 import com.cat_breeds.widgets.compose.AsyncImage
 import com.cat_breeds.widgets.compose.loadImageBitmap
+import dev.icerock.moko.resources.desc.Resource
+import dev.icerock.moko.resources.desc.StringDesc
 import kotlin.math.max
 
 @Composable
@@ -60,7 +63,7 @@ actual fun BreedListScreen(component: BreedListComponent) {
                                         modifier = Modifier
                                             .padding(top = 10.dp)
                                             .size(width = 200.dp, height = 200.dp),
-                                        text = "No Image",
+                                        text = StringDesc.Resource(SharedRes.strings.no_image).localized(),
                                         textAlign = TextAlign.Center,
                                     )
                                     else -> AsyncImage(

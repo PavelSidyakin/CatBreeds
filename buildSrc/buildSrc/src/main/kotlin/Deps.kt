@@ -97,15 +97,14 @@ object Deps {
         }
     }
 
-//    object Badoo {
-//        object Reaktive {
-//            private const val VERSION = "1.1.22"
-//            const val reaktive = "com.badoo.reaktive:reaktive:$VERSION"
-//            const val reaktiveTesting = "com.badoo.reaktive:reaktive-testing:$VERSION"
-//            const val utils = "com.badoo.reaktive:utils:$VERSION"
-//            const val coroutinesInterop = "com.badoo.reaktive:coroutines-interop:$VERSION"
-//        }
-//    }
+    object Icerock {
+        object Resources {
+            const val VERSION = "0.19.0"
+            const val core = "dev.icerock.moko:resources:$VERSION"
+            const val generator = "dev.icerock.moko:resources-generator:$VERSION"
+            const val compose = "dev.icerock.moko:resources-compose:$VERSION"
+        }
+    }
 
     object Squareup {
         object SQLDelight {
