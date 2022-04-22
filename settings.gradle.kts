@@ -27,3 +27,5 @@ include(":feature:breed_info:breed_info_ui")
 include(":app:common")
 include(":app:android")
 include(":app:desktop")
+
+include(":widgets:compose")

@@ -25,6 +25,7 @@ kotlin {
 
                 implementation(project(":di"))
                 implementation(project(":feature:breed_list:breed_list_domain"))
+                implementation(project(":widgets:compose"))
             }
         }
 
