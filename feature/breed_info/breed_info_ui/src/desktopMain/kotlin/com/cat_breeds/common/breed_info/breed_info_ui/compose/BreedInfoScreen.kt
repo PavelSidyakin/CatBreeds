@@ -40,13 +40,6 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
-            Icon(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .clickable { component.onCloseClicked() },
-                imageVector = Icons.Outlined.Close,
-                contentDescription = null,
-            )
             when (model.isLoading) {
                 true -> Box(
                     modifier = Modifier
@@ -62,7 +55,9 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                         BoxWithConstraints {
                             val maxHeight = maxHeight
                             Column(
-                                modifier = Modifier.padding(all = 10.dp),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(all = 10.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.SpaceBetween,
                             ) {
@@ -70,7 +65,7 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                                     null -> Text(text = "No image")
                                     else -> {
                                         AsyncImage(
-                                            modifier = Modifier.heightIn(max = maxHeight / 2),
+                                            modifier = Modifier,
                                             contentScale = ContentScale.FillWidth,
                                             load = { loadImageBitmap(imageUrl) },
                                             painterFor = { remember { BitmapPainter(it) } },
@@ -87,7 +82,13 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                     }
                 }
             }
+            Icon(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .clickable { component.onCloseClicked() },
+                imageVector = Icons.Outlined.Close,
+                contentDescription = null,
+            )
         }
     }
-
 }
