@@ -33,6 +33,7 @@ kotlin {
                 implementation(project(":feature:root_screen:common"))
 
                 implementation(project(":feature:breed_list:breed_list_ui"))
+                implementation(project(":feature:breed_info:breed_info_ui"))
             }
         }
     }

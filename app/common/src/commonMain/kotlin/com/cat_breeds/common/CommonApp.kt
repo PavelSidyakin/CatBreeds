@@ -2,6 +2,7 @@ package com.cat_breeds.common
 
 import com.cat_breeds.common.breed_info.breed_info_data.di.breedInfoDataModule
 import com.cat_breeds.common.breed_info.breed_info_domain.di.breedInfoDomainModule
+import com.cat_breeds.common.breed_info.breed_info_ui.di.breedInfoUiModule
 import com.cat_breeds.common.breed_list.breed_list_data.di.breedListDataModule
 import com.cat_breeds.common.breed_list.breed_list_domain.di.breedListDomainModule
 import com.cat_breeds.common.breed_list.breed_list_ui.di.breedListUiModule
@@ -18,7 +19,7 @@ class CommonApp {
             importOnce(breedListDataModule)
             importOnce(breedListDomainModule)
             importOnce(breedListUiModule)
-            importOnce(breedListUiModule)
+            importOnce(breedInfoUiModule)
             importOnce(catBreedsRootModule)
             importOnce(remoteDataModule)
         }

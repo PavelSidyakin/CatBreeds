@@ -13,4 +13,13 @@ data class Breed(
 
     @SerialName("image")
     val image: Image? = null,
+
+    @SerialName("origin")
+    val origin: String? = null,
+
+    @SerialName("description")
+    val description: String? = null,
+
+    @SerialName("temperament")
+    val temperament: String? = null,
 )

@@ -1,7 +1,7 @@
 package com.cat_breeds.common.breed_list.breed_list_ui.di
 
-import com.cat_breeds.common.breed_list.breed_list_ui.BreedList
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponent
+import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponentImpl
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponentParams
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListIntentExecutor
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListIntentExecutorImpl
@@ -10,7 +10,7 @@ import org.kodein.di.*
 
 
 val breedListUiModule = DI.Module("breedListUiModule") {
-    bind<BreedList> { factory { params: BreedListComponentParams -> BreedListComponent(params) } }
+    bind<BreedListComponent> { factory { params: BreedListComponentParams -> BreedListComponentImpl(params) } }
 }
 
 internal val breedListUiDI by lazy {

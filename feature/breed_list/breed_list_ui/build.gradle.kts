@@ -7,7 +7,6 @@ plugins {
 }
 
 kotlin {
-    //jvm()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -18,14 +17,12 @@ kotlin {
                 implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
                 implementation(Deps.DI.Kodein.di)
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
-
                 implementation(compose.runtime)
-//                implementation(compose.foundation)
-//                implementation(compose.material)
 
                 implementation(project(":di"))
                 implementation(project(":feature:breed_list:breed_list_domain"))
                 implementation(project(":widgets:compose"))
+                implementation(project(":utils:mvi"))
             }
         }
 

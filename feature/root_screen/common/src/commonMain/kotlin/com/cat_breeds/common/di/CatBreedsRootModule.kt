@@ -8,5 +8,13 @@ import org.kodein.di.bind
 import org.kodein.di.factory
 
 val catBreedsRootModule = DI.Module("catBreedsRootModule") {
-    bind<CatBreedsRoot> { factory { params: CatBreedsRootParams -> CatBreedsRootComponent(params, factory()) } }
+    bind<CatBreedsRoot> {
+        factory { params: CatBreedsRootParams ->
+            CatBreedsRootComponent(
+                params,
+                factory(),
+                factory()
+            )
+        }
+    }
 }

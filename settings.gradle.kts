@@ -29,3 +29,5 @@ include(":app:android")
 include(":app:desktop")
 
 include(":widgets:compose")
+
+include(":utils:mvi")

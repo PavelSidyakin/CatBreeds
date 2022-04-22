@@ -15,7 +15,7 @@ private typealias BreedListIntentExecutorCoroutineExecutor = CoroutineExecutor<
         Unit,
         BreedListState,
         BreedListMessage,
-        Nothing,
+        BreedListLabel,
         >
 
 internal class BreedListIntentExecutorImpl(
@@ -32,11 +32,11 @@ internal class BreedListIntentExecutorImpl(
 
     override fun executeIntent(intent: BreedListIntent, getState: () -> BreedListState) {
         when (intent) {
-            is BreedListIntent.Selected -> TODO()
+            is BreedListIntent.OnBreedClicked -> publish(BreedListLabel.NavigateToBreedInfo(intent.id))
         }
     }
 
     private fun BreedListItem.toBreedListUiItem(): BreedListUiItem {
-        return BreedListUiItem(name, imageUrl)
+        return BreedListUiItem(id, name, imageUrl)
     }
 }

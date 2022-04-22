@@ -1,12 +1,14 @@
 package com.cat_breeds.common.breed_info.breed_info_domain
 
-import com.cat_breeds.common.breed_info.breed_info_domain.data.BreedInfoRepository
+import com.cat_breeds.common.breed_info.breed_info_domain.data.BreedInfoRemoteRepository
 import com.cat_breeds.common.breed_info.breed_info_domain.model.BreedInfo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 internal class BreedInfoInteractorImpl(
-    private val breedInfoRepository: BreedInfoRepository,
+    private val breedInfoRepository: BreedInfoRemoteRepository,
 ) : BreedInfoInteractor {
-    override suspend fun requestBreedInfo(): BreedInfo {
-        return breedInfoRepository.requestBreedInfo()
+    override fun observeBreedInfo(id: String): Flow<BreedInfo?> {
+        return flow { emit(breedInfoRepository.requestBreedInfo(id)) }
     }
 }

@@ -5,11 +5,11 @@ import com.cat_breeds.common.breed_list.breed_list_domain.data.BreedListRemoteRe
 import com.cat_breeds.common.breed_list.breed_list_domain.model.BreedListItem
 
 internal class BreedListRemoteRepositoryImpl(
-    private val catApi: CatApi
+    private val catApi: CatApi,
 ) : BreedListRemoteRepository {
 
     override suspend fun requestBreeds(): List<BreedListItem> {
         return catApi.requestCatBreeds()
-            .map { BreedListItem(it.name, it.image?.url) }
+            .map { BreedListItem(it.id, it.name, it.image?.url) }
     }
 }

@@ -1,4 +1,4 @@
-package com.cat_breeds.common.breed_list.breed_list_ui
+package com.cat_breeds.widgets.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
@@ -15,12 +15,11 @@ import java.io.IOException
 import java.net.URL
 
 @Composable
-fun <T> AsyncImage(
+actual fun <T> AsyncImage(
     load: suspend () -> T,
     painterFor: @Composable (T) -> Painter,
-    contentDescription: String = "",
-    modifier: Modifier = Modifier,
-    contentScale: ContentScale = ContentScale.Fit,
+    modifier: Modifier,
+    contentScale: ContentScale,
 ) {
     val image: T? by produceState<T?>(null) {
         value = withContext(Dispatchers.IO) {
@@ -38,7 +37,7 @@ fun <T> AsyncImage(
     image?.let { image ->
         Image(
             painter = painterFor(image),
-            contentDescription = contentDescription,
+            contentDescription = null,
             contentScale = contentScale,
             modifier = modifier
         )
@@ -47,6 +46,6 @@ fun <T> AsyncImage(
 
 /* Loading from network with java.net API */
 
-fun loadImageBitmap(url: String): ImageBitmap =
+actual fun loadImageBitmap(url: String): ImageBitmap =
     URL(url).openStream().buffered().use(::loadImageBitmap)
 

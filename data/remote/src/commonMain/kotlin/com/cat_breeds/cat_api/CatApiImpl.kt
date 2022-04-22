@@ -5,7 +5,6 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -13,7 +12,9 @@ import kotlinx.serialization.json.Json
 internal class CatApiImpl : CatApi {
 
     private val client = HttpClient {
-        headersOf("x-api-key", BuildKonfig.CAT_API_KEY)
+        if (BuildKonfig.CAT_API_KEY.isNotBlank()) {
+            headersOf("x-api-key", BuildKonfig.CAT_API_KEY)
+        }
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
@@ -22,9 +23,11 @@ internal class CatApiImpl : CatApi {
     }
 
     override suspend fun requestCatBreeds(): List<Breed> {
-        return client.get("https://api.thecatapi.com/v1/breeds").run {
-            val string = bodyAsText()
-            body()
-        }
+        return client.get("https://api.thecatapi.com/v1/breeds").body()
+    }
+
+    override suspend fun requestCatBreed(id: String): Breed? {
+        // Temporary before adding a DB
+        return requestCatBreeds().find { it.id == id }
     }
 }

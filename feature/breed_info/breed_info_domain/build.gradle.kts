@@ -5,9 +5,10 @@ plugins {
 
 kotlin {
     sourceSets {
-        named("commonMain") {
+        val commonMain by getting {
             dependencies {
                 implementation(Deps.DI.Kodein.di)
+                implementation(Deps.JetBrains.Kotlin.Coroutines.core)
             }
         }
     }

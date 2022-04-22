@@ -9,6 +9,6 @@ internal interface BreedListIntentExecutor : Executor<
         Unit,
         BreedListState,
         BreedListMessage,
-        Nothing,
+        BreedListLabel,
         >
 

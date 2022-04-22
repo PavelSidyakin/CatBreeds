@@ -4,4 +4,5 @@ import com.arkivanov.decompose.ComponentContext
 
 data class BreedListComponentParams(
     val componentContext: ComponentContext,
+    val outputCallback: (BreedListComponent.Output) -> Unit,
 )
