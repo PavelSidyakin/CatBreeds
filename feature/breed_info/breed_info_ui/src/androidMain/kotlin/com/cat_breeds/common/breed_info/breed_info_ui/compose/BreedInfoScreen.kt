@@ -6,15 +6,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +38,7 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
         modifier = Modifier.fillMaxSize()
             .padding(all = 10.dp)
     ) {
+
         when (model.isLoading) {
             true -> Box(
                 modifier = Modifier
@@ -58,6 +58,7 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
                                 .padding(all = 10.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.SpaceBetween,
@@ -69,15 +70,14 @@ actual fun BreedInfoScreen(component: BreedInfoComponent) {
                                 )
                                 else -> {
                                     GlideImage(
-                                        modifier = Modifier.heightIn(max = maxHeight / 2),
                                         imageModel = imageUrl,
-                                        contentScale = ContentScale.FillWidth,
+                                        contentScale = ContentScale.Fit,
                                         shimmerParams = ShimmerParams(
                                             baseColor = MaterialTheme.colors.background,
                                             highlightColor = Color.DarkGray,
                                             durationMillis = 350,
                                             dropOff = 0.65f,
-                                            tilt = 20f
+                                            tilt = 20f,
                                         )
                                     )
                                 }
