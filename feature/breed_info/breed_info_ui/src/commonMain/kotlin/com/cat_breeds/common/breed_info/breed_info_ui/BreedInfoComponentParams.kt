@@ -5,5 +5,5 @@ import com.arkivanov.decompose.ComponentContext
 data class BreedInfoComponentParams(
     val componentContext: ComponentContext,
     val breedId: String,
-    val output: (BreedInfoComponent.Output) -> Unit,
+    val outputCallback: (BreedInfoComponent.Output) -> Unit,
 )

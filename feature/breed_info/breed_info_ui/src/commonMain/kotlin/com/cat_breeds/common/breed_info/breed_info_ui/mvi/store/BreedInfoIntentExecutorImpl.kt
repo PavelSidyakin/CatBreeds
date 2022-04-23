@@ -5,7 +5,6 @@ import com.cat_breeds.common.breed_info.breed_info_domain.BreedInfoInteractor
 import com.cat_breeds.common.breed_info.breed_info_domain.model.BreedInfo
 import com.cat_breeds.common.breed_info.breed_info_ui.BreedUiInfo
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoIntent
-import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoLabel
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map

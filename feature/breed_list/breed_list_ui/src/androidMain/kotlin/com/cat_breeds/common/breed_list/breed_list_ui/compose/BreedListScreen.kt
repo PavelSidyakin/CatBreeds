@@ -44,17 +44,7 @@ actual fun BreedListScreen(
 ) {
     val model by component.models.subscribeAsState()
 
-    LaunchedEffect(Unit) {
-        component.onLaunch()
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            component.onDispose()
-        }
-    }
-
-    component.setOnLabelListener { label ->
+    component.setOnEventListener { event ->
 
     }
 

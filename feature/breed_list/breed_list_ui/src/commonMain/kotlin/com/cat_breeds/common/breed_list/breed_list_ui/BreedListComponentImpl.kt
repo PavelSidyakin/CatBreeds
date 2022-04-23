@@ -2,8 +2,6 @@ package com.cat_breeds.common.breed_list.breed_list_ui
 
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.instancekeeper.InstanceKeeper
-import com.arkivanov.essenty.instancekeeper.getOrCreate
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
@@ -16,11 +14,8 @@ import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListIntentE
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListLabel
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListReducer
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListStore
+import com.cat_breeds.utils.mvi.lifecycleCoroutineScope
 import com.cat_breeds.utils.mvi.stateAsValue
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.kodein.di.instance
@@ -40,45 +35,31 @@ internal class BreedListComponentImpl(
         ) {}
     }
 
-    private val scope: CoroutineScope = instanceKeeper.getOrCreate {
-        object : InstanceKeeper.Instance {
-            val scope = CoroutineScope(Dispatchers.Main)
-            override fun onDestroy() {
-                scope.cancel()
-            }
-        }
-    }.scope
+    private val scope = lifecycleCoroutineScope()
 
-    private var labelsJob: Job? = null
-
-    private var labelListener: ((BreedListLabel) -> Unit)? = null
+    private var eventListener: ((BreedListComponent.Event) -> Unit)? = null
 
     override val models: Value<BreedListState> by lazy { store.stateAsValue(scope) }
 
-    override fun onLaunch() {
-        labelsJob = store.labels
-            .onEach { label ->
-                labelListener?.invoke(label)
-                when (label) {
-                    is BreedListLabel.NavigateToBreedInfo -> params.outputCallback(
-                        BreedListComponent.Output.NavigateToBreedInfo(
-                            label.breedId,
-                        )
-                    )
-                }
-            }
+    init {
+        store.labels
+            .onEach { handleLabel(it) }
             .launchIn(scope)
     }
 
-    override fun onDispose() {
-        labelsJob?.cancel()
-    }
-
-    override fun setOnLabelListener(listener: (label: BreedListLabel) -> Unit) {
-        labelListener = listener
+    override fun setOnEventListener(listener: (event: BreedListComponent.Event) -> Unit) {
+        eventListener = listener
     }
 
     override fun onBreedClicked(id: String) {
         store.accept(BreedListIntent.OnBreedClicked(id))
+    }
+
+    private fun handleLabel(label: BreedListLabel) {
+        when (label) {
+            is BreedListLabel.NavigateToBreedInfo -> params.outputCallback(
+                BreedListComponent.Output.NavigateToBreedInfo(label.breedId)
+            )
+        }.run { } // make exhaustive
     }
 }

@@ -38,16 +38,6 @@ import kotlin.math.max
 actual fun BreedListScreen(component: BreedListComponent) {
     val model by component.models.subscribeAsState()
 
-    LaunchedEffect(Unit) {
-        component.onLaunch()
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            component.onDispose()
-        }
-    }
-
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val columnCount = max((maxWidth.value / 200).toInt(), 1)
 

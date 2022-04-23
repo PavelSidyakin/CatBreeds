@@ -35,16 +35,6 @@ import dev.icerock.moko.resources.desc.StringDesc
 actual fun BreedInfoScreen(component: BreedInfoComponent) {
     val model: BreedInfoState by component.models.subscribeAsState()
 
-    LaunchedEffect(Unit) {
-        component.onLaunch()
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            component.onDispose()
-        }
-    }
-
     Card(
         modifier = Modifier.fillMaxSize()
             .padding(all = 10.dp)
