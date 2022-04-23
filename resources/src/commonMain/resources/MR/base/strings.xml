@@ -3,4 +3,5 @@
     <string name="app_name">Cat Breeds</string>
     <string name="no_image">No image</string>
     <string name="no_info">No info</string>
+    <string name="error_message">Something wrong. Try to refresh later</string>
 </resources>

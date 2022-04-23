@@ -55,11 +55,16 @@ internal class BreedListComponentImpl(
         store.accept(BreedListIntent.OnBreedClicked(id))
     }
 
+    override fun onRefreshClicked() {
+        store.accept(BreedListIntent.OnRefreshClicked)
+    }
+
     private fun handleLabel(label: BreedListLabel) {
         when (label) {
             is BreedListLabel.NavigateToBreedInfo -> params.outputCallback(
                 BreedListComponent.Output.NavigateToBreedInfo(label.breedId)
             )
+            BreedListLabel.ShowErrorMessage -> eventListener?.invoke(BreedListComponent.Event.Error)
         }.run { } // make exhaustive
     }
 }

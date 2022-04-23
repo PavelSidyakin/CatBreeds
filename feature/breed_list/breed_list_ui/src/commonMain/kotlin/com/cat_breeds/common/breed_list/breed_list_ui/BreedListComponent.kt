@@ -9,9 +9,10 @@ interface BreedListComponent {
     fun setOnEventListener(listener: (event: Event) -> Unit)
 
     fun onBreedClicked(id: String)
+    fun onRefreshClicked()
 
     sealed interface Event {
-
+        object Error: Event
     }
 
     sealed interface Output {

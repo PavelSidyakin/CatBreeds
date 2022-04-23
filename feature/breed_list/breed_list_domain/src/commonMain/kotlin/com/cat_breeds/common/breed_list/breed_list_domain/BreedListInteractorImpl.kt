@@ -10,7 +10,11 @@ internal class BreedListInteractorImpl(
 ) : BreedListInteractor {
     override fun observeBreeds(): Flow<List<BreedListItem>> {
         return flow {
-            emit(breedListRemoteRepository.requestBreeds())
+            try {
+                emit(breedListRemoteRepository.requestBreeds())
+            } catch (th: Throwable) {
+                throw th
+            }
         }
     }
 }
