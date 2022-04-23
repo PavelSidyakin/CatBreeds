@@ -13,6 +13,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +34,16 @@ import dev.icerock.moko.resources.desc.StringDesc
 @Composable
 actual fun BreedInfoScreen(component: BreedInfoComponent) {
     val model: BreedInfoState by component.models.subscribeAsState()
+
+    LaunchedEffect(Unit) {
+        component.onLaunch()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            component.onDispose()
+        }
+    }
 
     Card(
         modifier = Modifier.fillMaxSize()

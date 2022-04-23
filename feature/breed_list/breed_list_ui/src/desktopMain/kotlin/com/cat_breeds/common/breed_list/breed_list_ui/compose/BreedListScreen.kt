@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,6 +37,16 @@ import kotlin.math.max
 @Composable
 actual fun BreedListScreen(component: BreedListComponent) {
     val model by component.models.subscribeAsState()
+
+    LaunchedEffect(Unit) {
+        component.onLaunch()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            component.onDispose()
+        }
+    }
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val columnCount = max((maxWidth.value / 200).toInt(), 1)

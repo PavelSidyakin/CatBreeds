@@ -15,6 +15,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,6 +36,16 @@ import dev.icerock.moko.resources.desc.StringDesc
 @Composable
 actual fun BreedInfoScreen(component: BreedInfoComponent) {
     val model by component.models.subscribeAsState()
+
+    LaunchedEffect(Unit) {
+        component.onLaunch()
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            component.onDispose()
+        }
+    }
 
     Card(
         modifier = Modifier.fillMaxSize()

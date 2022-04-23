@@ -8,9 +8,12 @@ import com.cat_breeds.utils.mvi.ObservableValue
 interface BreedListComponent {
     val models: Value<BreedListState>
 
-    val labels: ObservableValue<BreedListLabel>
+    fun setOnLabelListener(listener: (label: BreedListLabel) -> Unit)
 
     fun onBreedClicked(id: String)
+
+    fun onLaunch()
+    fun onDispose()
 
     sealed interface Output {
         data class NavigateToBreedInfo(val breedId: String): Output

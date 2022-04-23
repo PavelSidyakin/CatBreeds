@@ -8,6 +8,9 @@ interface BreedInfoComponent {
 
     fun onCloseClicked()
 
+    fun onLaunch()
+    fun onDispose()
+
     sealed interface Output {
         object Close: Output
     }
