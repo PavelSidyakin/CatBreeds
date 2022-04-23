@@ -46,4 +46,5 @@ dependencies {
     implementation(project(":di"))
     implementation(project(":app:common"))
     implementation(project(":feature:root_screen:android"))
+    implementation(project(":data:local"))
 }

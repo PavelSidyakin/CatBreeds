@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface BreedListInteractor {
     fun observeBreeds(): Flow<List<BreedListItem>>
+    suspend fun forceUpdateBreeds()
 }

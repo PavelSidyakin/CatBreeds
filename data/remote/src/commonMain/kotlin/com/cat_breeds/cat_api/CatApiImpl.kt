@@ -27,7 +27,7 @@ internal class CatApiImpl : CatApi {
     }
 
     override suspend fun requestCatBreed(id: String): Breed? {
-        // Temporary before adding a DB
+        // There is no optimal request, unfortunately
         return requestCatBreeds().find { it.id == id }
     }
 }

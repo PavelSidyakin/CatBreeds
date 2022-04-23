@@ -1,0 +1,32 @@
+
+CREATE TABLE tCatBreed (
+  f_breedId TEXT NOT NULL,
+  f_name TEXT NOT NULL,
+  f_image_url TEXT,
+  f_origin TEXT,
+  f_temperament TEXT,
+  f_description TEXT
+);
+
+CREATE TABLE tFavorite (
+  f_breedId TEXT NOT NULL
+);
+
+selectAllBreeds:
+SELECT *
+FROM tCatBreed;
+
+selectBreed:
+SELECT *
+FROM tCatBreed
+WHERE f_breedId=?;
+
+hasBreeds:
+SELECT EXISTS(SELECT 1 FROM tCatBreed);
+
+insertCatBreeds:
+INSERT INTO tCatBreed(f_breedId, f_name, f_image_url, f_origin, f_temperament, f_description)
+VALUES ?;
+
+deleteCatBreeds:
+DELETE FROM tCatBreed;

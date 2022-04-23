@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 private typealias BreedListIntentExecutorCoroutineExecutor = CoroutineExecutor<
         BreedListIntent,
@@ -33,7 +34,9 @@ internal class BreedListIntentExecutorImpl(
     override fun executeIntent(intent: BreedListIntent, getState: () -> BreedListState) {
         when (intent) {
             is BreedListIntent.OnBreedClicked -> publish(BreedListLabel.NavigateToBreedInfo(intent.id))
-            BreedListIntent.OnRefreshClicked -> observeBreeds()
+            BreedListIntent.OnRefreshClicked -> scope.launch {
+                breedListInteractor.forceUpdateBreeds()
+            }
         }
     }
 
