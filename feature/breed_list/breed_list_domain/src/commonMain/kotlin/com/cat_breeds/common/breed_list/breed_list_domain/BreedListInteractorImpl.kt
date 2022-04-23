@@ -21,6 +21,10 @@ internal class BreedListInteractorImpl(
             }
     }
 
+    override suspend fun initBreeds() {
+        breedInteractor.initBreeds()
+    }
+
     override suspend fun forceUpdateBreeds() {
         breedInteractor.forceUpdateBreeds()
     }

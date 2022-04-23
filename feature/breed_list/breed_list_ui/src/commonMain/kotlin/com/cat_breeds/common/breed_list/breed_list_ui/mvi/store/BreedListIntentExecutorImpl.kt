@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 private typealias BreedListIntentExecutorCoroutineExecutor = CoroutineExecutor<
@@ -29,14 +30,20 @@ internal class BreedListIntentExecutorImpl(
 
     override fun executeAction(action: Unit, getState: () -> BreedListState) {
         observeBreeds()
+        scope.launch {
+            dispatch(BreedListMessage.LoadingStateChanged(true))
+            try {
+                breedListInteractor.initBreeds()
+            } catch (th: Throwable) {
+                publish(BreedListLabel.ShowErrorMessage)
+            }
+        }
     }
 
     override fun executeIntent(intent: BreedListIntent, getState: () -> BreedListState) {
         when (intent) {
             is BreedListIntent.OnBreedClicked -> publish(BreedListLabel.NavigateToBreedInfo(intent.id))
-            BreedListIntent.OnRefreshClicked -> scope.launch {
-                breedListInteractor.forceUpdateBreeds()
-            }
+            BreedListIntent.OnRefreshClicked -> forceUpdateBreeds()
         }
     }
 
@@ -45,12 +52,27 @@ internal class BreedListIntentExecutorImpl(
         observeBreedsJob = breedListInteractor.observeBreeds()
             .map { list -> list.map { it.toBreedListUiItem() } }
             .map { BreedListMessage.ListChanged(it) }
-            .onEach { dispatch(it) }
+            .onEach { list ->
+                dispatch(list)
+                dispatch(BreedListMessage.LoadingStateChanged(false))
+            }
             .catch { publish(BreedListLabel.ShowErrorMessage) }
+            .onStart { dispatch(BreedListMessage.LoadingStateChanged(true)) }
             .launchIn(scope)
     }
 
     private fun BreedListItem.toBreedListUiItem(): BreedListUiItem {
         return BreedListUiItem(id, name, imageUrl)
+    }
+
+    private fun forceUpdateBreeds() {
+        scope.launch {
+            dispatch(BreedListMessage.LoadingStateChanged(true))
+            try {
+                breedListInteractor.forceUpdateBreeds()
+            } catch (th: Throwable) {
+                publish(BreedListLabel.ShowErrorMessage)
+            }
+        }
     }
 }

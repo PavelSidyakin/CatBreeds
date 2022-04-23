@@ -1,7 +1,9 @@
 package com.cat_breeds.common.breed_list.breed_list_ui.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
@@ -25,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
@@ -64,47 +68,59 @@ actual fun BreedListScreen(component: BreedListComponent) {
 
         SnackbarHost(hostState = snackbarHostState)
 
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            val columnCount = max((maxWidth.value / 200).toInt(), 1)
-
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+        when (model.isLoading) {
+            true -> Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Gray),
+                contentAlignment = Alignment.Center,
             ) {
-                items(items = model.breeds.chunked(columnCount)) { breedListRowItems ->
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        breedListRowItems.forEach { breedListItem ->
-                            Card(
-                                modifier = Modifier
-                                    .height(300.dp)
-                                    .padding(all = 10.dp)
-                                    .clickable {
-                                        component.onBreedClicked(breedListItem.id)
-                                    },
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(bottom = 10.dp),
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.SpaceBetween,
-                                ) {
-                                    when (breedListItem.imageUrl) {
-                                        null -> Text(
-                                            modifier = Modifier
-                                                .padding(top = 10.dp)
-                                                .size(width = 200.dp, height = 200.dp),
-                                            text = StringDesc.Resource(SharedRes.strings.no_image).localized(),
-                                            textAlign = TextAlign.Center,
-                                        )
-                                        else -> AsyncImage(
-                                            modifier = Modifier.size(width = 200.dp, height = 200.dp),
-                                            contentScale = ContentScale.FillWidth,
-                                            load = { loadImageBitmap(breedListItem.imageUrl) },
-                                            painterFor = { remember { BitmapPainter(it) } },
-                                        )
+                CircularProgressIndicator(color = Color.Blue)
+            }
+            false -> {
+                BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+                    val columnCount = max((maxWidth.value / 200).toInt(), 1)
+
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        items(items = model.breeds.chunked(columnCount)) { breedListRowItems ->
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                breedListRowItems.forEach { breedListItem ->
+                                    Card(
+                                        modifier = Modifier
+                                            .height(300.dp)
+                                            .padding(all = 10.dp)
+                                            .clickable {
+                                                component.onBreedClicked(breedListItem.id)
+                                            },
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.padding(bottom = 10.dp),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.SpaceBetween,
+                                        ) {
+                                            when (breedListItem.imageUrl) {
+                                                null -> Text(
+                                                    modifier = Modifier
+                                                        .padding(top = 10.dp)
+                                                        .size(width = 200.dp, height = 200.dp),
+                                                    text = StringDesc.Resource(SharedRes.strings.no_image).localized(),
+                                                    textAlign = TextAlign.Center,
+                                                )
+                                                else -> AsyncImage(
+                                                    modifier = Modifier.size(width = 200.dp, height = 200.dp),
+                                                    contentScale = ContentScale.FillWidth,
+                                                    load = { loadImageBitmap(breedListItem.imageUrl) },
+                                                    painterFor = { remember { BitmapPainter(it) } },
+                                                )
+                                            }
+                                            Text(
+                                                text = breedListItem.name,
+                                                textAlign = TextAlign.Center,
+                                            )
+                                        }
                                     }
-                                    Text(
-                                        text = breedListItem.name,
-                                        textAlign = TextAlign.Center,
-                                    )
                                 }
                             }
                         }
@@ -112,6 +128,7 @@ actual fun BreedListScreen(component: BreedListComponent) {
                 }
             }
         }
+
     }
 
 }
