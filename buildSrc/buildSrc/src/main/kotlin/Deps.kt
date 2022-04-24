@@ -34,6 +34,10 @@ object Deps {
                 const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION"
                 const val jvm = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION"
             }
+
+            object Serialization {
+                const val VERSION = "1.6.10"
+            }
         }
 
 
@@ -140,5 +144,13 @@ object Deps {
 
     object Widgets {
         const val landscapistGlide = "com.github.skydoves:landscapist-glide:1.5.1"
+    }
+
+    object Codingfeline {
+        object BuildKonfig {
+            const val VERSION = "0.11.0"
+
+            const val gradlePlugin = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:$VERSION"
+        }
     }
 }

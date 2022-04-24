@@ -1,5 +1,0 @@
-TODO:
-
-fix gradle scripts
-
-use dispatcher provider

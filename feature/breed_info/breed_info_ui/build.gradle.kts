@@ -22,7 +22,7 @@ kotlin {
                 implementation(project(":di"))
                 implementation(project(":feature:breed_info:breed_info_domain"))
                 implementation(project(":widgets:compose"))
-                implementation(project(":utils:mvi"))
+                implementation(project(":utils:presentation_utils"))
                 implementation(project(":resources"))
             }
         }
@@ -41,6 +41,5 @@ kotlin {
                 implementation(Deps.Widgets.landscapistGlide)
             }
         }
-
     }
 }

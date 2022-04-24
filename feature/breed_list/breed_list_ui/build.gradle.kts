@@ -22,7 +22,7 @@ kotlin {
                 implementation(project(":di"))
                 implementation(project(":feature:breed_list:breed_list_domain"))
                 implementation(project(":widgets:compose"))
-                implementation(project(":utils:mvi"))
+                implementation(project(":utils:presentation_utils"))
                 implementation(project(":resources"))
             }
         }

@@ -18,7 +18,7 @@ kotlin {
                 implementation(project(":di"))
                 implementation(project(":feature:breed_list:breed_list_ui"))
                 implementation(project(":feature:breed_info:breed_info_ui"))
-                implementation(project(":utils:mvi"))
+                implementation(project(":utils:presentation_utils"))
             }
         }
     }

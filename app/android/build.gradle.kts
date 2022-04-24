@@ -27,10 +27,6 @@ android {
 }
 
 dependencies {
-//    implementation(project(":common:database"))
-//    implementation(project(":common:utils"))
-//    implementation(project(":common:root"))
-//    implementation(project(":common:compose-ui"))
     implementation(compose.material)
     implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
     implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
@@ -44,7 +40,9 @@ dependencies {
     implementation(Deps.DI.Kodein.di)
 
     implementation(project(":di"))
+
+    implementation(project(":data:local"))
+
     implementation(project(":app:common"))
     implementation(project(":feature:root_screen:android"))
-    implementation(project(":data:local"))
 }

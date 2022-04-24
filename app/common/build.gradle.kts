@@ -5,11 +5,15 @@ plugins {
 
 kotlin {
     sourceSets {
-        named("commonMain") {
+        val commonMain by getting {
             dependencies {
                 implementation(Deps.DI.Kodein.di)
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
+
                 implementation(project(":di"))
+
+                implementation(project(":data:remote"))
+                implementation(project(":data:local"))
 
                 implementation(project(":feature:breed:breed_domain"))
                 implementation(project(":feature:breed:breed_data"))
@@ -22,8 +26,6 @@ kotlin {
 
                 implementation(project(":feature:root_screen:common"))
 
-                implementation(project(":data:remote"))
-                implementation(project(":data:local"))
             }
         }
     }

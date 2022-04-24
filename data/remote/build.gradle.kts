@@ -2,15 +2,15 @@ import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 buildscript {
     dependencies {
-        classpath("com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:0.11.0")
+        classpath(Deps.Codingfeline.BuildKonfig.gradlePlugin)
     }
 }
 
 plugins {
     id("multiplatform-setup")
     id("android-setup")
-    kotlin("plugin.serialization") version "1.6.10"
-    id("com.codingfeline.buildkonfig") version "0.11.0"
+    kotlin("plugin.serialization") version Deps.JetBrains.Kotlin.Serialization.VERSION
+    id("com.codingfeline.buildkonfig") version Deps.Codingfeline.BuildKonfig.VERSION
 }
 
 kotlin {
@@ -43,8 +43,6 @@ kotlin {
 
 buildkonfig {
     packageName = "com.cat_breeds.cat_api"
-    // objectName = "YourAwesomeConfig"
-    // exposeObjectWithName = "YourAwesomePublicConfig"
 
     defaultConfigs {
         buildConfigField(STRING, "CAT_API_KEY", properties["catApiKey"].toString())
