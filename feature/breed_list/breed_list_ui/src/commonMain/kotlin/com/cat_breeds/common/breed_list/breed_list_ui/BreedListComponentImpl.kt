@@ -55,7 +55,7 @@ internal class BreedListComponentImpl(
         store.accept(BreedListIntent.OnBreedClicked(id))
     }
 
-    override fun onRefreshClicked() {
+    override fun onRefresh() {
         store.accept(BreedListIntent.OnRefreshClicked)
     }
 

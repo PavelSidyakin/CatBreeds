@@ -1,6 +1,5 @@
 package com.cat_breeds.common.breed_list.breed_list_ui.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,14 +16,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarHost
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -40,6 +35,8 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListComponent
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListUiItem
 import com.cat_breeds.resources.SharedRes
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 import dev.icerock.moko.resources.desc.Resource
@@ -65,81 +62,77 @@ actual fun BreedListScreen(component: BreedListComponent) {
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Icon(
-            modifier = Modifier.clickable { component.onRefreshClicked() },
-            imageVector = Icons.Outlined.Refresh,
-            contentDescription = null,
-        )
+    Box(modifier = Modifier.fillMaxSize()) {
 
-        SnackbarHost(hostState = snackbarHostState)
+//        when (model.isLoading) {
+//            true -> Box(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .background(color = Color.Gray),
+//                contentAlignment = Alignment.Center,
+//            ) {
+//                CircularProgressIndicator(color = Color.Blue)
+//            }
+//            false -> {
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val columnCount = max((maxWidth.value / 180).toInt(), 1)
 
-        when (model.isLoading) {
-            true -> Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Gray),
-                contentAlignment = Alignment.Center,
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(model.isLoading),
+                onRefresh = { component.onRefresh() }
             ) {
-                CircularProgressIndicator(color = Color.Blue)
-            }
-            false -> {
-                BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-                    val columnCount = max((maxWidth.value / 180).toInt(), 1)
-
-
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        state = rememberLazyListState(),
-                    ) {
-                        items(items = model.breeds.chunked(columnCount)) { breedListRowItems ->
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.Center,
-                            ) {
-                                breedListRowItems.forEach { breedListItem: BreedListUiItem ->
-                                    Card(
-                                        modifier = Modifier
-                                            .height(300.dp)
-                                            .width(160.dp)
-                                            .padding(all = 10.dp)
-                                            .clickable {
-                                                component.onBreedClicked(breedListItem.id)
-                                            },
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    state = rememberLazyListState(),
+                ) {
+                    items(items = model.breeds.chunked(columnCount)) { breedListRowItems ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            breedListRowItems.forEach { breedListItem: BreedListUiItem ->
+                                Card(
+                                    modifier = Modifier
+                                        .height(300.dp)
+                                        .width(160.dp)
+                                        .padding(all = 10.dp)
+                                        .clickable {
+                                            component.onBreedClicked(breedListItem.id)
+                                        },
+                                    elevation = 4.dp,
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(bottom = 10.dp),
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.SpaceBetween,
                                     ) {
-                                        Column(
-                                            modifier = Modifier.padding(bottom = 10.dp),
-                                            horizontalAlignment = Alignment.CenterHorizontally,
-                                            verticalArrangement = Arrangement.SpaceBetween,
-                                        ) {
-                                            when (breedListItem.imageUrl) {
-                                                null -> Text(
-                                                    modifier = Modifier
-                                                        .padding(top = 10.dp)
-                                                        .width(200.dp),
-                                                    text = StringDesc.Resource(SharedRes.strings.no_image)
-                                                        .toString(LocalContext.current),
-                                                    textAlign = TextAlign.Center,
-                                                )
-                                                else -> GlideImage(
-                                                    modifier = Modifier.size(width = 200.dp, height = 200.dp),
-                                                    imageModel = breedListItem.imageUrl,
-                                                    contentScale = ContentScale.FillWidth,
-                                                    shimmerParams = ShimmerParams(
-                                                        baseColor = MaterialTheme.colors.background,
-                                                        highlightColor = Color.DarkGray,
-                                                        durationMillis = 350,
-                                                        dropOff = 0.65f,
-                                                        tilt = 20f
-                                                    )
-                                                )
-                                            }
-                                            Text(
-                                                modifier = Modifier.width(200.dp),
-                                                text = breedListItem.name,
+                                        when (breedListItem.imageUrl) {
+                                            null -> Text(
+                                                modifier = Modifier
+                                                    .padding(top = 10.dp)
+                                                    .width(200.dp),
+                                                text = StringDesc.Resource(SharedRes.strings.no_image)
+                                                    .toString(LocalContext.current),
                                                 textAlign = TextAlign.Center,
                                             )
+                                            else -> GlideImage(
+                                                modifier = Modifier.size(width = 200.dp, height = 200.dp),
+                                                imageModel = breedListItem.imageUrl,
+                                                contentScale = ContentScale.FillWidth,
+                                                shimmerParams = ShimmerParams(
+                                                    baseColor = MaterialTheme.colors.background,
+                                                    highlightColor = Color.DarkGray,
+                                                    durationMillis = 350,
+                                                    dropOff = 0.65f,
+                                                    tilt = 20f
+                                                )
+                                            )
                                         }
+                                        Text(
+                                            modifier = Modifier.width(200.dp),
+                                            text = breedListItem.name,
+                                            textAlign = TextAlign.Center,
+                                        )
                                     }
                                 }
                             }
@@ -147,6 +140,9 @@ actual fun BreedListScreen(component: BreedListComponent) {
                     }
                 }
             }
+            //}
         }
+        SnackbarHost(hostState = snackbarHostState)
+        //}
     }
 }

@@ -61,12 +61,10 @@ actual fun BreedListScreen(component: BreedListComponent) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Icon(
-            modifier = Modifier.clickable { component.onRefreshClicked() },
+            modifier = Modifier.clickable { component.onRefresh() },
             imageVector = Icons.Outlined.Refresh,
             contentDescription = null,
         )
-
-        SnackbarHost(hostState = snackbarHostState)
 
         when (model.isLoading) {
             true -> Box(
@@ -94,6 +92,7 @@ actual fun BreedListScreen(component: BreedListComponent) {
                                             .clickable {
                                                 component.onBreedClicked(breedListItem.id)
                                             },
+                                        elevation = 4.dp,
                                     ) {
                                         Column(
                                             modifier = Modifier.padding(bottom = 10.dp),
@@ -128,7 +127,7 @@ actual fun BreedListScreen(component: BreedListComponent) {
                 }
             }
         }
-
+        SnackbarHost(hostState = snackbarHostState)
     }
 
 }

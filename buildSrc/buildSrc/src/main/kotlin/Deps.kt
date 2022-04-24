@@ -70,6 +70,12 @@ object Deps {
 
             val default = listOf(ui, tooling, foundation, material, activity, iconsCore, iconsEx)
         }
+
+        object Accompanist {
+            private const val VERSION = "0.23.1"
+
+            const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$VERSION"
+        }
     }
 
     object ArkIvanov {

@@ -68,6 +68,17 @@ internal class BreedLocalRepositoryImpl(
         }
     }
 
+    override suspend fun clearAndAddBreads(breeds: List<Breed>) {
+        withContext(Dispatchers.Default) {
+            db.transaction {
+                db.catBreedQueries.deleteCatBreeds()
+                breeds.forEach { breed ->
+                    db.catBreedQueries.insertCatBreeds(breed.toTCatBreed())
+                }
+            }
+        }
+    }
+
     private fun TCatBreed.toBreed(): Breed {
         return Breed(
             id = f_breedId,

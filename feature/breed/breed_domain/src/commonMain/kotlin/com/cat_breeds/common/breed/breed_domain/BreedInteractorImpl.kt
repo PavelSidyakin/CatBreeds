@@ -33,8 +33,8 @@ internal class BreedInteractorImpl(
     }
 
     override suspend fun forceUpdateBreeds() {
-        breedLocalRepository.clearBreeds()
-        breedLocalRepository.addBreeds(breedRemoteRepository.requestBreeds())
+        val remoteBreeds = breedRemoteRepository.requestBreeds()
+        breedLocalRepository.clearAndAddBreads(remoteBreeds)
     }
 
     override suspend fun initBreeds() {

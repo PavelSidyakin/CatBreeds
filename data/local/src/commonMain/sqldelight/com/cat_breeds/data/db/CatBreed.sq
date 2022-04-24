@@ -1,5 +1,5 @@
 
-CREATE TABLE tCatBreed (
+CREATE TABLE IF NOT EXISTS tCatBreed (
   f_breedId TEXT NOT NULL,
   f_name TEXT NOT NULL,
   f_image_url TEXT,

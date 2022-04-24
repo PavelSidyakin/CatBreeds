@@ -56,7 +56,10 @@ internal class BreedListIntentExecutorImpl(
                 dispatch(list)
                 dispatch(BreedListMessage.LoadingStateChanged(false))
             }
-            .catch { publish(BreedListLabel.ShowErrorMessage) }
+            .catch {
+                publish(BreedListLabel.ShowErrorMessage)
+                dispatch(BreedListMessage.LoadingStateChanged(false))
+            }
             .onStart { dispatch(BreedListMessage.LoadingStateChanged(true)) }
             .launchIn(scope)
     }
@@ -71,6 +74,7 @@ internal class BreedListIntentExecutorImpl(
             try {
                 breedListInteractor.forceUpdateBreeds()
             } catch (th: Throwable) {
+                dispatch(BreedListMessage.LoadingStateChanged(false))
                 publish(BreedListLabel.ShowErrorMessage)
             }
         }

@@ -10,4 +10,5 @@ interface BreedLocalRepository {
     suspend fun selectBreed(breedId: String): Breed?
     suspend fun addBreeds(breeds: List<Breed>)
     suspend fun clearBreeds()
+    suspend fun clearAndAddBreads(breeds: List<Breed>)
 }
