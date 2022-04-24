@@ -1,4 +1,4 @@
-package com.cat_breeds.remote.di
+package com.cat_breeds.local.di
 
 import com.cat_breeds.db.createDatabase
 import org.kodein.di.DI

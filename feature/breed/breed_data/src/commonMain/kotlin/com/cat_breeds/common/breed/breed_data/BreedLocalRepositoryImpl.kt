@@ -6,53 +6,66 @@ import com.cat_breeds.data.db.CatBreedsDatabase
 import com.catbreeds.data.db.TCatBreed
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 internal class BreedLocalRepositoryImpl(
     private val db: CatBreedsDatabase,
 ) : BreedLocalRepository {
 
     override suspend fun hasBreeds(): Boolean {
-        return db.catBreedQueries.hasBreeds().asFlow().mapToList().first().first()
+        return withContext(Dispatchers.Default) {
+            db.catBreedQueries.hasBreeds().asFlow().mapToList().first().first()
+        }
     }
 
     override fun observeBreeds(): Flow<List<Breed>> {
         return db.catBreedQueries.selectAllBreeds()
             .asFlow()
             .mapToList()
+            .flowOn(Dispatchers.Default)
             .map { dbBreeds: List<TCatBreed> ->
                 dbBreeds.map { it.toBreed() }
             }
     }
 
     override suspend fun selectBreed(breedId: String): Breed? {
-        return db.catBreedQueries.selectBreed(breedId).asFlow().mapToList().firstOrNull()?.firstOrNull()?.toBreed()
+        return withContext(Dispatchers.Default) {
+            db.catBreedQueries.selectBreed(breedId).asFlow().mapToList().firstOrNull()?.firstOrNull()?.toBreed()
+        }
     }
 
     override fun observeBreed(breedId: String): Flow<Breed> {
         return db.catBreedQueries.selectBreed(breedId)
             .asFlow()
             .mapToList()
+            .flowOn(Dispatchers.Default)
             .map { dbBreeds: List<TCatBreed> ->
                 dbBreeds.map { it.toBreed() }.first()
             }
     }
 
     override suspend fun addBreeds(breeds: List<Breed>) {
-        db.catBreedQueries.run {
-            transaction {
-                breeds.forEach { breed ->
-                    insertCatBreeds(breed.toTCatBreed())
+        withContext(Dispatchers.Default) {
+            db.catBreedQueries.run {
+                transaction {
+                    breeds.forEach { breed ->
+                        insertCatBreeds(breed.toTCatBreed())
+                    }
                 }
             }
         }
     }
 
     override suspend fun clearBreeds() {
-        db.catBreedQueries.deleteCatBreeds()
+        withContext(Dispatchers.Default) {
+            db.catBreedQueries.deleteCatBreeds()
+        }
     }
 
     private fun TCatBreed.toBreed(): Breed {

@@ -8,10 +8,6 @@ CREATE TABLE tCatBreed (
   f_description TEXT
 );
 
-CREATE TABLE tFavorite (
-  f_breedId TEXT NOT NULL
-);
-
 selectAllBreeds:
 SELECT *
 FROM tCatBreed;
