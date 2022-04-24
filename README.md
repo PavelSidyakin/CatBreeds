@@ -17,6 +17,19 @@ Supported targets: android, desktop (JVM).
    - Ktor
    - BuildKonfig
 
+#### Remote API
+
+The app uses The Cat API. 
+
+To run the app you need an API key. Get a free API Key here: https://thecatapi.com/signup
+
+Put in your local `gradle.properties`:
+
+```
+catApiKey=YOUR_API_KEY
+```
+
+
 #### Module structure
 
 ##### Notation
