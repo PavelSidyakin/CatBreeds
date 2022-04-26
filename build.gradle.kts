@@ -7,4 +7,8 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 }

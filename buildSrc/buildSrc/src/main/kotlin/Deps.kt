@@ -153,4 +153,24 @@ object Deps {
             const val gradlePlugin = "com.codingfeline.buildkonfig:buildkonfig-gradle-plugin:$VERSION"
         }
     }
+
+    object UnitTesting {
+        object Kotest {
+            const val VERSION = "5.2.3"
+
+            const val engine = "io.kotest:kotest-framework-engine:$VERSION"
+            const val assertions = "io.kotest:kotest-assertions-core:$VERSION"
+
+            const val runnerJvm = "io.kotest:kotest-runner-junit5-jvm:$VERSION"
+        }
+
+        object Mockk {
+            private const val VERSION = "1.12.3"
+
+            const val mockkCommon = "io.mockk:mockk-common:$VERSION"
+
+            const val mockk = "io.mockk:mockk:$VERSION"
+            const val mockkJvm = "io.mockk:mockk-agent-jvm:$VERSION"
+        }
+    }
 }
