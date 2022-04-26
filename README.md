@@ -3,34 +3,32 @@
 An example of Kotlin Multiplatform app.  
 Supported targets: android, desktop (JVM).   
   
-#### Used technologies/libraries:  
-   - Kotlin Multiplatform
-   - Clean Architecture
-   - Kotlin Coroutines
-   - Kodein
-   - Jetbrains Compose
-   - Android Compose
-   - MVIKotlin
-   - Decompose
-   - Moko resources
-   - SqlDelight
-   - Ktor
-   - BuildKonfig
+### Popular technologies/libraries used
 
-#### Remote API
+- Common: Clean Architecture, Kotlin Multiplatform, MVI
+- Asynchnonusity: Kotlin Coroutines
+- Dependency Injection: Kodein
+- UI layouts: Jetbrains Compose, Android Compose
+- MVI: MVIKotlin
+- Navigation: Decompose
+- Local storage: SqlDelight
+- HTTP client: Ktor
+- Localization: Moko resources
+
+### Remote API
 
 The app uses The Cat API. 
 
 To run the app you need an API key. Get a free API Key here: https://thecatapi.com/signup
 
-Put in your local `gradle.properties`:
+Put in your home `gradle.properties`:
 
 ```
 catApiKey=YOUR_API_KEY
 ```
 
 
-#### Module structure
+### Module structure
 
 ##### Notation
 
@@ -70,9 +68,9 @@ catApiKey=YOUR_API_KEY
 
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed:domain` - uses data from remote and the local repositories
 
-<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed_list:breed_list_domain` - prepares data for breed list
-
 <br/>
+
+<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed_list:breed_list_domain` - prepares data for breed list
 
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed_list:breed_list_ui` - UI for breed list (MVI and view)
 
