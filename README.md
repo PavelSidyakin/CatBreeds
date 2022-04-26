@@ -53,6 +53,8 @@ catApiKey=YOUR_API_KEY
 
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `resources` - contains string resources
 
+<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `utils:common_utils` - various utilities
+
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `utils:presentation_utils` - various presentation utilities
 
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `widgets:compose` - compose widgets
