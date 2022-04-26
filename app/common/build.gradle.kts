@@ -12,6 +12,8 @@ kotlin {
 
                 implementation(project(":di"))
 
+                implementation(project(":utils:common_utils"))
+
                 implementation(project(":data:remote"))
                 implementation(project(":data:local"))
 

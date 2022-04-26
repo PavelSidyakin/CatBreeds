@@ -6,6 +6,7 @@ import com.cat_breeds.common.breed_info.breed_info_domain.model.BreedInfo
 import com.cat_breeds.common.breed_info.breed_info_ui.BreedUiInfo
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoIntent
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoState
+import com.cat_breeds.utils.DispatcherProvider
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -22,7 +23,8 @@ private typealias BreedInfoIntentExecutorCoroutineExecutor = CoroutineExecutor<
 internal class BreedInfoIntentExecutorImpl(
     private val breedId: String,
     private val breedInfoInteractor: BreedInfoInteractor,
-) : BreedInfoIntentExecutorCoroutineExecutor(), BreedInfoIntentExecutor {
+    dispatcherProvider: DispatcherProvider,
+) : BreedInfoIntentExecutorCoroutineExecutor(dispatcherProvider.main), BreedInfoIntentExecutor {
 
     override fun executeAction(action: Unit, getState: () -> BreedInfoState) {
         breedInfoInteractor.observeBreedInfo(breedId)

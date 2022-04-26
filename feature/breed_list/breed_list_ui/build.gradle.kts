@@ -20,6 +20,7 @@ kotlin {
                 implementation(compose.runtime)
 
                 implementation(project(":di"))
+                implementation(project(":utils:common_utils"))
                 implementation(project(":feature:breed_list:breed_list_domain"))
                 implementation(project(":widgets:compose"))
                 implementation(project(":utils:presentation_utils"))
@@ -42,6 +43,5 @@ kotlin {
                 implementation(Deps.AndroidX.Accompanist.swipeRefresh)
             }
         }
-
     }
 }

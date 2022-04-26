@@ -6,6 +6,7 @@ import com.cat_breeds.common.breed_list.breed_list_domain.model.BreedListItem
 import com.cat_breeds.common.breed_list.breed_list_ui.BreedListUiItem
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.BreedListIntent
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.BreedListState
+import com.cat_breeds.utils.DispatcherProvider
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
@@ -24,7 +25,8 @@ private typealias BreedListIntentExecutorCoroutineExecutor = CoroutineExecutor<
 
 internal class BreedListIntentExecutorImpl(
     private val breedListInteractor: BreedListInteractor,
-) : BreedListIntentExecutorCoroutineExecutor(), BreedListIntentExecutor {
+    dispatcherProvider: DispatcherProvider,
+) : BreedListIntentExecutorCoroutineExecutor(dispatcherProvider.main), BreedListIntentExecutor {
 
     private var observeBreedsJob: Job? = null
 

@@ -11,5 +11,5 @@ import org.kodein.di.singleton
 
 val breedDataModule = DI.Module("breedDataModule") {
     bind<BreedRemoteRepository> { singleton { BreedRemoteRepositoryImpl(instance()) } }
-    bind<BreedLocalRepository> { singleton { BreedLocalRepositoryImpl(instance()) } }
+    bind<BreedLocalRepository> { singleton { BreedLocalRepositoryImpl(instance(), instance()) } }
 }

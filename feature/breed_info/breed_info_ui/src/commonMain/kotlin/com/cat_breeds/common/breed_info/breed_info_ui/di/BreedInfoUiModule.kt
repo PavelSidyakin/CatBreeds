@@ -16,7 +16,8 @@ val breedInfoUiModule = DI.Module("breedInfoUiModule") {
     bind<BreedInfoComponent> {
         factory { params: BreedInfoComponentParams ->
             BreedInfoComponentImpl(
-                params
+                params,
+                instance(),
             )
         }
     }
@@ -29,7 +30,8 @@ internal val breedInfoUiDI by lazy {
             factory { breedId: String ->
                 BreedInfoIntentExecutorImpl(
                     breedId,
-                    instance()
+                    instance(),
+                    instance(),
                 )
             }
         }

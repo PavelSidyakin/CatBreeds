@@ -20,6 +20,7 @@ include(":data:local")
 include(":widgets:compose")
 
 include(":utils:presentation_utils")
+include(":utils:common_utils")
 
 include(":resources")
 

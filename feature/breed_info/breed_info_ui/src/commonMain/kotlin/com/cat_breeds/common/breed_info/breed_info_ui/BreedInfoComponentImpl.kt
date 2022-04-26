@@ -14,6 +14,7 @@ import com.cat_breeds.common.breed_info.breed_info_ui.mvi.BreedInfoState
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.store.BreedInfoIntentExecutor
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.store.BreedInfoReducer
 import com.cat_breeds.common.breed_info.breed_info_ui.mvi.store.BreedInfoStore
+import com.cat_breeds.utils.DispatcherProvider
 import com.cat_breeds.utils.mvi.lifecycleCoroutineScope
 import com.cat_breeds.utils.mvi.stateAsValue
 import kotlinx.coroutines.CoroutineScope
@@ -24,6 +25,7 @@ import org.kodein.di.instance
 
 internal class BreedInfoComponentImpl(
     private val params: BreedInfoComponentParams,
+    private val dispatcherProvider: DispatcherProvider,
 ) : BreedInfoComponent, ComponentContext by params.componentContext {
 
     private val store: BreedInfoStore = instanceKeeper.getStore {
@@ -38,7 +40,7 @@ internal class BreedInfoComponentImpl(
             ) {}
     }
 
-    private val scope: CoroutineScope = lifecycleCoroutineScope()
+    private val scope: CoroutineScope = lifecycleCoroutineScope(dispatcherProvider.main)
 
     override val models: Value<BreedInfoState> = store.stateAsValue(scope)
 

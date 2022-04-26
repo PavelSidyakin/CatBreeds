@@ -20,6 +20,7 @@ kotlin {
                 implementation(compose.runtime)
 
                 implementation(project(":di"))
+                implementation(project(":utils:common_utils"))
                 implementation(project(":feature:breed_info:breed_info_domain"))
                 implementation(project(":widgets:compose"))
                 implementation(project(":utils:presentation_utils"))

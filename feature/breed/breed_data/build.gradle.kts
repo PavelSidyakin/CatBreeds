@@ -11,6 +11,8 @@ kotlin {
                 implementation(Deps.JetBrains.Kotlin.Coroutines.core)
                 implementation(Deps.Squareup.SQLDelight.extensions)
 
+                implementation(project(":utils:common_utils"))
+
                 implementation(project(":data:remote"))
                 implementation(project(":data:local"))
                 implementation(project(":feature:breed:breed_domain"))

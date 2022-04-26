@@ -14,6 +14,7 @@ import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListIntentE
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListLabel
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListReducer
 import com.cat_breeds.common.breed_list.breed_list_ui.mvi.store.BreedListStore
+import com.cat_breeds.utils.DispatcherProvider
 import com.cat_breeds.utils.mvi.lifecycleCoroutineScope
 import com.cat_breeds.utils.mvi.stateAsValue
 import kotlinx.coroutines.flow.launchIn
@@ -22,6 +23,7 @@ import org.kodein.di.instance
 
 internal class BreedListComponentImpl(
     private val params: BreedListComponentParams,
+    private val dispatcherProvider: DispatcherProvider,
 ) : BreedListComponent, ComponentContext by params.componentContext {
 
     private val store: BreedListStore = instanceKeeper.getStore {
@@ -35,7 +37,7 @@ internal class BreedListComponentImpl(
         ) {}
     }
 
-    private val scope = lifecycleCoroutineScope()
+    private val scope = lifecycleCoroutineScope(coroutineContext = dispatcherProvider.main)
 
     private var eventListener: ((BreedListComponent.Event) -> Unit)? = null
 

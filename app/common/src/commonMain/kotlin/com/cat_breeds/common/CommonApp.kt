@@ -9,12 +9,14 @@ import com.cat_breeds.common.breed_list.breed_list_ui.di.breedListUiModule
 import com.cat_breeds.common.di.catBreedsRootModule
 import com.cat_breeds.local.di.localDataModule
 import com.cat_breeds.remote.di.remoteDataModule
+import com.cat_breeds.utils.di.commonUtilsModule
 import org.kodein.di.DI
 
 class CommonApp {
 
     fun buildCommonDI(diBuilder: DI.Builder) {
         diBuilder.run {
+            importOnce(commonUtilsModule)
             importOnce(breedInfoDomainModule)
             importOnce(breedListDomainModule)
             importOnce(breedListUiModule)

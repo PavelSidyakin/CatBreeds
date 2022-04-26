@@ -3,10 +3,10 @@ package com.cat_breeds.common.breed.breed_data
 import com.cat_breeds.common.breed.breed_domain.data.BreedLocalRepository
 import com.cat_breeds.common.breed.breed_domain.model.Breed
 import com.cat_breeds.data.db.CatBreedsDatabase
+import com.cat_breeds.utils.DispatcherProvider
 import com.catbreeds.data.db.TCatBreed
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
@@ -16,10 +16,11 @@ import kotlinx.coroutines.withContext
 
 internal class BreedLocalRepositoryImpl(
     private val db: CatBreedsDatabase,
+    private val dispatcherProvider: DispatcherProvider,
 ) : BreedLocalRepository {
 
     override suspend fun hasBreeds(): Boolean {
-        return withContext(Dispatchers.Default) {
+        return withContext(dispatcherProvider.io) {
             db.catBreedsDatabaseQueries.hasBreeds().asFlow().mapToList().first().first()
         }
     }
@@ -28,14 +29,14 @@ internal class BreedLocalRepositoryImpl(
         return db.catBreedsDatabaseQueries.selectAllBreeds()
             .asFlow()
             .mapToList()
-            .flowOn(Dispatchers.Default)
+            .flowOn(dispatcherProvider.io)
             .map { dbBreeds: List<TCatBreed> ->
                 dbBreeds.map { it.toBreed() }
             }
     }
 
     override suspend fun selectBreed(breedId: String): Breed? {
-        return withContext(Dispatchers.Default) {
+        return withContext(dispatcherProvider.io) {
             db.catBreedsDatabaseQueries.selectBreed(breedId).asFlow().mapToList().firstOrNull()?.firstOrNull()?.toBreed()
         }
     }
@@ -44,14 +45,14 @@ internal class BreedLocalRepositoryImpl(
         return db.catBreedsDatabaseQueries.selectBreed(breedId)
             .asFlow()
             .mapToList()
-            .flowOn(Dispatchers.Default)
+            .flowOn(dispatcherProvider.io)
             .map { dbBreeds: List<TCatBreed> ->
                 dbBreeds.map { it.toBreed() }.first()
             }
     }
 
     override suspend fun addBreeds(breeds: List<Breed>) {
-        withContext(Dispatchers.Default) {
+        withContext(dispatcherProvider.io) {
             db.catBreedsDatabaseQueries.run {
                 transaction {
                     breeds.forEach { breed ->
@@ -63,13 +64,13 @@ internal class BreedLocalRepositoryImpl(
     }
 
     override suspend fun clearBreeds() {
-        withContext(Dispatchers.Default) {
+        withContext(dispatcherProvider.io) {
             db.catBreedsDatabaseQueries.deleteCatBreeds()
         }
     }
 
     override suspend fun clearAndAddBreads(breeds: List<Breed>) {
-        withContext(Dispatchers.Default) {
+        withContext(dispatcherProvider.io) {
             db.transaction {
                 db.catBreedsDatabaseQueries.deleteCatBreeds()
                 breeds.forEach { breed ->

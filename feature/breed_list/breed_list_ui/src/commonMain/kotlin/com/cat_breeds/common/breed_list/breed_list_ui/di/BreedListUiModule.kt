@@ -10,12 +10,19 @@ import org.kodein.di.*
 
 
 val breedListUiModule = DI.Module("breedListUiModule") {
-    bind<BreedListComponent> { factory { params: BreedListComponentParams -> BreedListComponentImpl(params) } }
+    bind<BreedListComponent> {
+        factory { params: BreedListComponentParams ->
+            BreedListComponentImpl(
+                params,
+                instance(),
+            )
+        }
+    }
 }
 
 internal val breedListUiDI by lazy {
     DI {
         extend(globalDI)
-        bind<BreedListIntentExecutor> { provider { BreedListIntentExecutorImpl(instance()) } }
+        bind<BreedListIntentExecutor> { provider { BreedListIntentExecutorImpl(instance(), instance()) } }
     }
 }
