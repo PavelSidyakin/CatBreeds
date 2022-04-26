@@ -14,6 +14,7 @@ Supported targets: android, desktop (JVM).
 - Local storage: SqlDelight
 - HTTP client: Ktor
 - Localization: Moko resources
+- Unit testing: Kotest (framework, assertions), MockK
 
 ### Remote API
 
