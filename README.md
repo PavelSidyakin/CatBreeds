@@ -41,7 +41,7 @@ catApiKey=YOUR_API_KEY
 
 ##### Modules
 
-<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `app:common` - common application
+<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `app:common` - shared code for the platform applications
 
 <img src="https://user-images.githubusercontent.com/50498272/164989026-c0932bb8-35eb-4db3-b01c-34bea756c284.png" height=14> `app:android` - android application
 
