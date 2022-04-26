@@ -20,12 +20,12 @@ internal class BreedLocalRepositoryImpl(
 
     override suspend fun hasBreeds(): Boolean {
         return withContext(Dispatchers.Default) {
-            db.catBreedQueries.hasBreeds().asFlow().mapToList().first().first()
+            db.catBreedsDatabaseQueries.hasBreeds().asFlow().mapToList().first().first()
         }
     }
 
     override fun observeBreeds(): Flow<List<Breed>> {
-        return db.catBreedQueries.selectAllBreeds()
+        return db.catBreedsDatabaseQueries.selectAllBreeds()
             .asFlow()
             .mapToList()
             .flowOn(Dispatchers.Default)
@@ -36,12 +36,12 @@ internal class BreedLocalRepositoryImpl(
 
     override suspend fun selectBreed(breedId: String): Breed? {
         return withContext(Dispatchers.Default) {
-            db.catBreedQueries.selectBreed(breedId).asFlow().mapToList().firstOrNull()?.firstOrNull()?.toBreed()
+            db.catBreedsDatabaseQueries.selectBreed(breedId).asFlow().mapToList().firstOrNull()?.firstOrNull()?.toBreed()
         }
     }
 
     override fun observeBreed(breedId: String): Flow<Breed> {
-        return db.catBreedQueries.selectBreed(breedId)
+        return db.catBreedsDatabaseQueries.selectBreed(breedId)
             .asFlow()
             .mapToList()
             .flowOn(Dispatchers.Default)
@@ -52,7 +52,7 @@ internal class BreedLocalRepositoryImpl(
 
     override suspend fun addBreeds(breeds: List<Breed>) {
         withContext(Dispatchers.Default) {
-            db.catBreedQueries.run {
+            db.catBreedsDatabaseQueries.run {
                 transaction {
                     breeds.forEach { breed ->
                         insertCatBreeds(breed.toTCatBreed())
@@ -64,16 +64,16 @@ internal class BreedLocalRepositoryImpl(
 
     override suspend fun clearBreeds() {
         withContext(Dispatchers.Default) {
-            db.catBreedQueries.deleteCatBreeds()
+            db.catBreedsDatabaseQueries.deleteCatBreeds()
         }
     }
 
     override suspend fun clearAndAddBreads(breeds: List<Breed>) {
         withContext(Dispatchers.Default) {
             db.transaction {
-                db.catBreedQueries.deleteCatBreeds()
+                db.catBreedsDatabaseQueries.deleteCatBreeds()
                 breeds.forEach { breed ->
-                    db.catBreedQueries.insertCatBreeds(breed.toTCatBreed())
+                    db.catBreedsDatabaseQueries.insertCatBreeds(breed.toTCatBreed())
                 }
             }
         }
