@@ -23,7 +23,7 @@ import org.kodein.di.instance
 
 internal class BreedListComponentImpl(
     private val params: BreedListComponentParams,
-    private val dispatcherProvider: DispatcherProvider,
+    dispatcherProvider: DispatcherProvider,
 ) : BreedListComponent, ComponentContext by params.componentContext {
 
     private val store: BreedListStore = instanceKeeper.getStore {
