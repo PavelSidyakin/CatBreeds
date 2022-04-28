@@ -3,17 +3,17 @@ package com.cat_breeds.common.breed.breed_domain
 import com.cat_breeds.common.breed.breed_domain.data.BreedLocalRepository
 import com.cat_breeds.common.breed.breed_domain.data.BreedRemoteRepository
 import com.cat_breeds.common.breed.breed_domain.model.Breed
-import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.throwables.shouldThrowWithMessage
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.IsolationMode
-import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.core.spec.style.FreeSpec
+import io.kotest.core.spec.style.scopes.FreeSpecContainerScope
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
 import io.mockk.mockk
 
-class BreedInteractorImplTest : BehaviorSpec() {
+class BreedInteractorImplTestFreeSpec : FreeSpec() {
 
     init {
         isolationMode = IsolationMode.InstancePerTest
@@ -23,12 +23,20 @@ class BreedInteractorImplTest : BehaviorSpec() {
 
         val interactor = BreedInteractorImpl(remoteRepository, localRepository)
 
-        Given("The remote repository calls throw an exception") {
-            afterEach {
-                // Here should be verifyAll, but it doesn't work due to unknown reasons
-                coVerify(exactly = 0) { localRepository.addBreeds(any()) }
-                coVerify(exactly = 0) { localRepository.clearBreeds() }
-                coVerify(exactly = 0) { localRepository.clearAndAddBreads(any()) }
+        "The remote repository calls throw an exception" - {
+
+            suspend fun FreeSpecContainerScope.verifyNoWriteInLocalRepository() {
+                "shouldn't write to the local repository" - {
+                    "shouldn't add" {
+                        coVerify(exactly = 0) { localRepository.addBreeds(any()) }
+                    }
+                    "shouldn't clear" {
+                        coVerify(exactly = 0) { localRepository.clearBreeds() }
+                    }
+                    "shouldn't clear and add" {
+                        coVerify(exactly = 0) { localRepository.clearAndAddBreads(any()) }
+                    }
+                }
             }
 
             val errorMessage = "ceciwemciew"
@@ -36,66 +44,90 @@ class BreedInteractorImplTest : BehaviorSpec() {
             coEvery { remoteRepository.requestBreeds() } throws RuntimeException(errorMessage)
             coEvery { remoteRepository.requestBreed(any()) } throws RuntimeException(errorMessage)
 
-            When("forceUpdateBreeds() is called") {
-                Then("Should throw the exception") {
-                    // Action & verify
-                    shouldThrowWithMessage<RuntimeException>(errorMessage) {
-                        interactor.forceUpdateBreeds()
+            "forceUpdateBreeds() is called" - {
+                // Action
+                val result = kotlin.runCatching { interactor.forceUpdateBreeds() }
+                "Should throw the exception" {
+                    // verify
+                    assertSoftly {
+                        result.isFailure shouldBe true
+                        result.exceptionOrNull() shouldBe RuntimeException(errorMessage)
                     }
                 }
+                verifyNoWriteInLocalRepository()
             }
 
-            When("initBreeds() is called") {
-                And("has no local data") {
+            "initBreeds() is called" - {
+                "has no local data" - {
                     // Mock
                     coEvery { localRepository.hasBreeds() } returns false
-                    Then("Should throw the exception") {
-                        // Action & verify
-                        shouldThrowWithMessage<RuntimeException>(errorMessage) {
-                            interactor.initBreeds()
+
+                    // Action
+                    val result = kotlin.runCatching { interactor.initBreeds() }
+
+                    "Should throw the exception" {
+                        // verify
+                        assertSoftly {
+                            result.isFailure shouldBe true
+                            result.exceptionOrNull() shouldBe RuntimeException(errorMessage)
                         }
                     }
+                    verifyNoWriteInLocalRepository()
                 }
-                And("has local data") {
+                "has local data" - {
                     // Mock
                     coEvery { localRepository.hasBreeds() } returns true
-                    Then("Shouldn't throw an exception") {
-                        // Action & verify
-                        shouldNotThrowAny {
-                            interactor.initBreeds()
+
+                    // Action
+                    val result = kotlin.runCatching { interactor.initBreeds() }
+
+                    "Shouldn't throw an exception" {
+                        // verify
+                        assertSoftly {
+                            result.isFailure shouldBe false
                         }
                     }
+                    verifyNoWriteInLocalRepository()
                 }
             }
 
-            When("requestBreed() is called") {
-                And("Has breed in the local repository") {
+            "requestBreed() is called" - {
+                "Has breed in the local repository" - {
                     val breedId = "dwdewdew"
                     val breed: Breed = mockk(relaxed = true)
                     // Mock
                     coEvery { localRepository.selectBreed(breedId) } returns breed
 
-                    Then("Should return the local breed") {
+                    // Action
+                    val result = interactor.requestBreed(breedId)
+
+                    "Should return the local breed" {
                         // Action & verify
-                        interactor.requestBreed(breedId) shouldBe breed
+                        result shouldBe breed
                     }
+                    verifyNoWriteInLocalRepository()
                 }
-                And("Has no breed in the local repository") {
+                "Has no breed in the local repository" - {
                     val breedId = "dwdewdew"
                     // Mock
                     coEvery { localRepository.selectBreed(breedId) } returns null
 
-                    Then("Should throw the exception") {
-                        // Action & verify
-                        shouldThrowWithMessage<RuntimeException>(errorMessage) {
-                            interactor.requestBreed(breedId)
+                    // Action
+                    val result = kotlin.runCatching { interactor.requestBreed(breedId) }
+
+                    "Should throw the exception" {
+                        // verify
+                        assertSoftly {
+                            result.isFailure shouldBe true
+                            result.exceptionOrNull() shouldBe RuntimeException(errorMessage)
                         }
                     }
+                    verifyNoWriteInLocalRepository()
                 }
             }
         }
 
-        Given("The remote repository calls return valid data") {
+        "The remote repository calls return valid data" - {
             val remoteBreedList = listOf(createBreed(id = "1"), createBreed(id = "2"), createBreed(id = "3"))
             // Mock
             coEvery { remoteRepository.requestBreeds() } returns remoteBreedList
@@ -104,34 +136,34 @@ class BreedInteractorImplTest : BehaviorSpec() {
                 createBreed(id = breedId)
             }
 
-            When("forceUpdateBreeds() is called") {
+            "forceUpdateBreeds() is called" - {
                 // Action
                 interactor.forceUpdateBreeds()
-                Then("Should put the data to the local repository") {
+                "Should put the data to the local repository" {
                     // verify
                     coVerify { localRepository.clearAndAddBreads(remoteBreedList) }
                 }
             }
 
-            When("initBreeds() is called") {
-                And("has no local data") {
+            "initBreeds() is called" - {
+                "has no local data" - {
                     // Mock
                     coEvery { localRepository.hasBreeds() } returns false
 
                     // Action
                     interactor.initBreeds()
-                    Then("Should put the data to the local repository") {
+                    "Should put the data to the local repository" {
                         // Verify
                         coVerify { localRepository.addBreeds(remoteBreedList) }
                     }
                 }
-                And("has local data") {
+                "has local data" - {
                     // Mock
                     coEvery { localRepository.hasBreeds() } returns true
 
                     // Action
                     interactor.initBreeds()
-                    Then("Shouldn't alter local repository") {
+                    "Shouldn't alter local repository" {
                         // Verify
                         coVerify { localRepository.hasBreeds() }
                         confirmVerified(localRepository)
@@ -139,19 +171,19 @@ class BreedInteractorImplTest : BehaviorSpec() {
                 }
             }
 
-            When("requestBreed() is called") {
-                And("Has breed in the local repository") {
+            "requestBreed() is called" - {
+                "Has breed in the local repository" - {
                     val breedId = "dwdewdew"
                     val breed: Breed = mockk(relaxed = true)
                     // Mock
                     coEvery { localRepository.selectBreed(breedId) } returns breed
 
-                    Then("Should return the local breed") {
+                    "Should return the local breed" {
                         // Action & verify
                         interactor.requestBreed(breedId) shouldBe breed
                     }
                 }
-                And("Has no breed in the local repository") {
+                "Has no breed in the local repository" - {
                     val breedId = "ncjdncke"
                     // Mock
                     coEvery { localRepository.selectBreed(breedId) } returns null
@@ -165,17 +197,15 @@ class BreedInteractorImplTest : BehaviorSpec() {
                     // Action
                     returnedBreed = interactor.requestBreed(breedId)
 
-                    Then("Should request breed in the remote repository") {
+                    "Should request breed in the remote repository" {
                         // verify
                         coVerify { remoteRepository.requestBreed(breedId) }
-                        coVerify { localRepository.addBreeds(listOf(expectedBreed)) }
-                        returnedBreed shouldBe expectedBreed
                     }
-                    Then("Put the breed in the local repository") {
+                    "Should put the breed in the local repository" {
                         // verify
                         coVerify { localRepository.addBreeds(listOf(expectedBreed)) }
                     }
-                    Then("Returned breed should be the remote breed") {
+                    "Returned breed should be the remote breed" {
                         // verify
                         returnedBreed shouldBe expectedBreed
                     }
