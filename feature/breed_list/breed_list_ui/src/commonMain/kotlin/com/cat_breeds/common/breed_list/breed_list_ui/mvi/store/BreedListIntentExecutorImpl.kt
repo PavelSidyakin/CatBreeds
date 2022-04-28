@@ -33,7 +33,6 @@ internal class BreedListIntentExecutorImpl(
     override fun executeAction(action: Unit, getState: () -> BreedListState) {
         observeBreeds()
         scope.launch {
-            dispatch(BreedListMessage.LoadingStateChanged(true))
             try {
                 breedListInteractor.initBreeds()
             } catch (th: Throwable) {
@@ -45,7 +44,7 @@ internal class BreedListIntentExecutorImpl(
     override fun executeIntent(intent: BreedListIntent, getState: () -> BreedListState) {
         when (intent) {
             is BreedListIntent.OnBreedClicked -> publish(BreedListLabel.NavigateToBreedInfo(intent.id))
-            BreedListIntent.OnRefreshClicked -> forceUpdateBreeds()
+            BreedListIntent.OnRefresh -> forceUpdateBreeds()
         }
     }
 
@@ -54,8 +53,8 @@ internal class BreedListIntentExecutorImpl(
         observeBreedsJob = breedListInteractor.observeBreeds()
             .map { list -> list.map { it.toBreedListUiItem() } }
             .map { BreedListMessage.ListChanged(it) }
-            .onEach { list ->
-                dispatch(list)
+            .onEach { listChangedMessage: BreedListMessage.ListChanged ->
+                dispatch(listChangedMessage)
                 dispatch(BreedListMessage.LoadingStateChanged(false))
             }
             .catch {

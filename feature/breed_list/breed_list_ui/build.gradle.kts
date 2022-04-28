@@ -4,6 +4,7 @@ plugins {
     id("multiplatform-setup")
     id("android-setup")
     id("org.jetbrains.compose")
+    id("io.kotest.multiplatform") version Deps.UnitTesting.Kotest.VERSION
 }
 
 kotlin {
@@ -41,6 +42,22 @@ kotlin {
                 Deps.AndroidX.Compose.default.forEach { implementation(it) }
                 implementation(Deps.Widgets.landscapistGlide)
                 implementation(Deps.AndroidX.Accompanist.swipeRefresh)
+            }
+        }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(Deps.UnitTesting.Kotest.engine)
+                implementation(Deps.UnitTesting.Kotest.assertions)
+                implementation(Deps.UnitTesting.Mockk.mockkCommon)
+            }
+        }
+
+        val desktopTest by getting {
+            dependencies {
+                implementation(Deps.UnitTesting.Kotest.runnerJvm)
+                implementation(Deps.UnitTesting.Mockk.mockk)
+                implementation(Deps.UnitTesting.Mockk.mockkJvm)
             }
         }
     }

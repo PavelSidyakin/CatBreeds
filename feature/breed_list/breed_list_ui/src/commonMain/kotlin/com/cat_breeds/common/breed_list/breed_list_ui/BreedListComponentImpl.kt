@@ -58,7 +58,7 @@ internal class BreedListComponentImpl(
     }
 
     override fun onRefresh() {
-        store.accept(BreedListIntent.OnRefreshClicked)
+        store.accept(BreedListIntent.OnRefresh)
     }
 
     private fun handleLabel(label: BreedListLabel) {
