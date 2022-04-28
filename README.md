@@ -91,3 +91,16 @@ catApiKey=YOUR_API_KEY
 
 <img src="https://user-images.githubusercontent.com/50498272/164988981-12ca6b31-3d81-4dea-8590-fcacccd84486.png" height=14> `feature:root_screen:desktop` - contains  MainScreen composable (compose-jb)
 
+### Screenshots
+
+#### Android
+<img src="https://user-images.githubusercontent.com/50498272/165797681-246e8c7b-65dc-4ee1-90c2-86649f36bea3.png" height=300> <img src="https://user-images.githubusercontent.com/50498272/165797771-2b49be36-0a2e-47ab-8fe9-de4641460a38.png" height=300>
+
+
+#### Desktop
+
+<img src="https://user-images.githubusercontent.com/50498272/165798094-233c73a7-fe15-484a-a34d-1fa084039b32.png" height=300>
+<img src="https://user-images.githubusercontent.com/50498272/165798517-3c113075-2da6-4bc4-867d-85d1752d133e.png" height=300>
+
+
+
