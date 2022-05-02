@@ -69,7 +69,7 @@ catApiKey=YOUR_API_KEY
 
 <img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed:data` - local and remote repositories implementation
 
-<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed:domain` - uses data from remote and the local repositories
+<img src="https://user-images.githubusercontent.com/50498272/164987841-3283deb3-67f6-44ba-b03a-e6847ae52b22.png" height=12> `feature:breed:domain` - manages remote and the local repositories
 
 <br/>
 
