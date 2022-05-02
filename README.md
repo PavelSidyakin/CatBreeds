@@ -5,11 +5,11 @@ Supported targets: android, desktop (JVM).
   
 ### Popular technologies/libraries used
 
-- Common: Clean Architecture, Kotlin Multiplatform, MVI
+- Common: Clean Architecture, Kotlin Multiplatform
 - Asynchnonusity: Kotlin Coroutines
 - Dependency Injection: Kodein
+- UI pattern: MVI (MVIKotlin library)
 - UI layouts: Jetbrains Compose, Android Compose
-- MVI: MVIKotlin
 - Navigation: Decompose
 - Local storage: SqlDelight
 - HTTP client: Ktor
