@@ -29,20 +29,20 @@ object Deps {
             val testAnnotationsCommon get() = "org.jetbrains.kotlin:kotlin-test-annotations-common:$VERSION"
 
             object Coroutines {
-                private const val VERSION = "1.6.1"
+                private const val VERSION = "1.6.2"
                 const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$VERSION"
                 const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$VERSION"
                 const val jvm = "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$VERSION"
             }
 
             object Serialization {
-                const val VERSION = "1.6.10"
+                const val VERSION = "1.6.21"
             }
         }
 
 
         object Compose {
-            private val VERSION get() = properties["compose.version"]
+            private val VERSION get() = properties["compose.version"].toString()
 
             val gradlePlugin get() = "org.jetbrains.compose:compose-gradle-plugin:$VERSION"
         }
@@ -84,7 +84,7 @@ object Deps {
 
     object ArkIvanov {
         object MVIKotlin {
-            private const val VERSION = "3.0.0-beta01"
+            private const val VERSION = "3.0.0-beta02"
 
             const val mvikotlin = "com.arkivanov.mvikotlin:mvikotlin:$VERSION"
             const val mvikotlinCoroutines = "com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:$VERSION"
