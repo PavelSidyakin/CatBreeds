@@ -2,35 +2,27 @@ import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform") // kotlin("jvm") doesn't work well in IDEA/AndroidStudio (https://github.com/JetBrains/compose-jb/issues/22)
+    kotlin("jvm")
     id("org.jetbrains.compose")
 }
 
 kotlin {
-    jvm {
-        withJava()
-    }
-
-    sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(Deps.ArkIvanov.Decompose.decompose)
-                implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
-                implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
-                implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
-                implementation(Deps.Networking.KtorClient.desktop)
-                implementation(Deps.DI.Kodein.di)
-                implementation(Deps.JetBrains.Kotlin.Coroutines.core)
-                implementation(Deps.JetBrains.Kotlin.Coroutines.jvm)
+    dependencies {
+        implementation(compose.desktop.currentOs)
+        implementation(Deps.ArkIvanov.Decompose.decompose)
+        implementation(Deps.ArkIvanov.Decompose.extensionsCompose)
+        implementation(Deps.ArkIvanov.MVIKotlin.mvikotlin)
+        implementation(Deps.ArkIvanov.MVIKotlin.mvikotlinMain)
+        implementation(Deps.Networking.KtorClient.desktop)
+        implementation(Deps.DI.Kodein.di)
+        implementation(Deps.JetBrains.Kotlin.Coroutines.core)
+        implementation(Deps.JetBrains.Kotlin.Coroutines.jvm)
 
 
-                implementation(project(":di"))
-                implementation(project(":data:local"))
-                implementation(project(":app:common"))
-                implementation(project(":feature:root_screen:desktop"))
-            }
-        }
+        implementation(project(":di"))
+        implementation(project(":data:local"))
+        implementation(project(":app:common"))
+        implementation(project(":feature:root_screen:desktop"))
     }
 }
 
